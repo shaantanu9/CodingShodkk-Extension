@@ -1,9 +1,12 @@
 import axios from "axios";
 import React from "react";
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 const ShowBookmark = ({ bookmarks }) => {
   const deleteBookmark = (id) => {
     console.log("deleteBookmark", id);
-    axios.delete(`http://localhost:3000/bookmarks/${id}`).then((res) => {
+    axios.delete(`${BACKEND_URL}bookmarks/${id}`).then((res) => {
       console.log(res);
       // setButtonClicked(!buttonClicked);
     });

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ShowBookmark from "./ShowBookmark";
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 const GetURL = ({ currentTab }) => {
   const [getUrl, setGetUrl] = useState("");
   const [getBookmarkData, setGetBookmarkData] = useState([]);
@@ -12,12 +15,10 @@ const GetURL = ({ currentTab }) => {
   const getBookmarkFromURL = () => {
     if (getUrl === "") setGetUrl(currentTab);
     console.log(getUrl, "GetURL from getBookmarkFromURL", currentTab);
-    axios
-      .get(`http://localhost:3000/bookmarks/url?url=${getUrl}`)
-      .then((res) => {
-        console.log(res.data);
-        setGetBookmarkData(res.data);
-      });
+    axios.get(`${BACKEND_URL}bookmarks/url?url=${getUrl}`).then((res) => {
+      console.log(res.data);
+      setGetBookmarkData(res.data);
+    });
   };
 
   useEffect(() => {

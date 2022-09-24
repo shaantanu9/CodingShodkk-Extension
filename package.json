@@ -1,19 +1,12 @@
 {
-  "name": "Resume Reviewer",
+  "name": "codingshodkk-extension",
   "version": "1.0.0",
-  "description": "Extension for reviewing resumes on Github, LinkedIn and Portfolio websites",
-  "main": "index.js",
+  "description": "(Save code snippets from any website to your CodingShodkk account, Dont do same work again and again, Save time doing same Research Again)",
+  "main": "webpack.common.js",
   "scripts": {
     "start": "webpack --watch --progress --config webpack.dev.js",
     "build": "webpack --watch --progress --config webpack.prod.js"
   },
-  "author": {
-    "name": "Shantanu Bombatkar",
-    "email": "shantanubombatkar2@gmail.com",
-    "url": "https://github.com/shaantanu9",
-    "portfolio": "https://shantanubombatkar.shodkk.com"
-  },
-  "license": "MIT",
   "devDependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
@@ -38,7 +31,35 @@
     "webpack-cli": "^4.10.0",
     "webpack-merge": "^5.8.0"
   },
-  "dependencies": {
-    "dotenv": "^16.0.2"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaantanu9/CodingShodkk-Extension.git"
+  },
+  "keywords": [
+    "chrome-extension",
+    "react",
+    "typescript",
+    "webpack",
+    "sass",
+    "coding",
+    "coding-shodkk",
+    "coding-shodkk-extension",
+    "coding-shodkk-chrome-extension",
+    "coding-shodkk-chrome-extension-react",
+    "coding-shodkk-chrome-extension-typescript",
+    "coding-shodkk-chrome-extension-webpack",
+    "coding-shodkk-chrome-extension-sass",
+    "coding-shodkk-chrome-extension-react-typescript"
+  ],
+  "author": {
+    "name": "Shantanu Bombatkar",
+    "email": "shantanubombatkar2@gmail.com",
+    "url": "https://github.com/shaantanu9",
+    "portfolio": "https://shantanubombatkar.shodkk.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shaantanu9/CodingShodkk-Extension/issues"
+  },
+  "homepage": "https://github.com/shaantanu9/CodingShodkk-Extension#readme"
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const TextBox = () => {
   const [text, setText] = useState("");
   const [currentTab, setCurrentTab] = React.useState(null);
@@ -69,19 +70,17 @@ const TextBox = () => {
     const stringifyData = JSON.stringify(data);
     console.log(stringifyData, "stringifyData");
     description.length > 4 &&
-      axios.post("http://localhost:3000/bookmarks", data).then((res) => {
+      axios.post(BACKEND_URL + "bookmarks", data).then((res) => {
         console.log(res);
       });
   };
 
   const getBookmarkFromURL = () => {
-    axios
-      .get(`http://localhost:3000/bookmarks/url?url=${currentTab}`)
-      .then((res) => {
-        console.log(res.data);
-        setGetBookmarkData(getBookmarkData.concat(res.data));
-        // concat vs push => concat return new array and push return length of array, concat is immutable, push is mutable and concat is better than push because it is immutable
-      });
+    axios.get(`${BACKEND_URL}bookmarks/url?url=${currentTab}`).then((res) => {
+      console.log(res.data);
+      setGetBookmarkData(getBookmarkData.concat(res.data));
+      // concat vs push => concat return new array and push return length of array, concat is immutable, push is mutable and concat is better than push because it is immutable
+    });
   };
   // add style to form in typescript
   const formStyle = {

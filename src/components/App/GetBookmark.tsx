@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import dotenv from "dotenv";
-// dotenv.config();
-// const BACKEND_URL = process.env.BACKEND_URL;
-const BACKEND_URL = "http://localhost:3000/bookmarks/";
-// http://localhost:3000/bookmarks/url?url=http://localhost:5000/bookmark
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
+console.log(BACKEND_URL);
+
 const GetBookmark = () => {
   const [bookmarks, setBookmarks] = useState([]);
   const [currentTab, setCurrentTab] = React.useState(null);
