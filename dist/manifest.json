@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Bookmark Manager Save the link and notes",
+  "description": "An Chrome Extension to save the link and notes",
+  "version": "1.0.0",
+  "icons": {
+    "16": "logo.svg",
+    "48": "logo.svg",
+    "128": "logo.svg"
+  },
+  "action": {
+    "default_title": "Bookmark Link and Notes",
+    "default_popup": "popup.html",
+    "default_icon": "logo.svg"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"],
+      "css": ["contentScript.css"]
+    }
+  ],
+  "permissions": ["tabs", "*://*/*", "storage", "activeTab", "webRequest"],
+  "options_page": "options.html"
+}
