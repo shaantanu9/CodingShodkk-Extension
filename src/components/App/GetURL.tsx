@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ShowBookmark from "./ShowBookmark";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = "https://camel-bedclothes.cyclic.app/";
 
 const GetURL = ({ currentTab }) => {
   const [getUrl, setGetUrl] = useState("");
@@ -15,35 +16,30 @@ const GetURL = ({ currentTab }) => {
   const getBookmarkFromURL = () => {
     if (getUrl === "") setGetUrl(currentTab);
     console.log(getUrl, "GetURL from getBookmarkFromURL", currentTab);
-    axios.get(`${BACKEND_URL}bookmarks/url?url=${getUrl}`).then((res) => {
+    axios.get(`${BACKEND_URL}bookmarks/search?s=${getUrl}`).then((res) => {
       console.log(res.data);
       setGetBookmarkData(res.data);
     });
   };
-
-  useEffect(() => {
-    getBookmarkFromURL();
-  }, [getUrl]);
+  const onEnter = (e) => {
+    if (e.key === "Enter") {
+      getBookmarkFromURL();
+    }
+  };
 
   return (
     <>
       <div>
-        <input type="text" id="url" value={getUrl} onChange={onChangeHandler} />
+        <input
+          type="text"
+          id="url"
+          onChange={onChangeHandler}
+          onKeyDown={(e) => onEnter(e)}
+        />
         <button onClick={getBookmarkFromURL}>Get Bookmark</button>
         <p>{getUrl}</p>
-        {/* <button onClick={currentTabClickHandler}>CurrentTab</button> */}
-        {/* get current tab */}
       </div>
       <ShowBookmark bookmarks={getBookmarkData} />
-      {/* <div>
-        {getBookmarkData.map((data) => (
-          <div key={data.id}>
-            <h1>{data.title}</h1>
-            <p>{data.description}</p>
-            <p>{data.tags}</p>
-          </div>
-        ))}
-      </div> */}
     </>
   );
 };

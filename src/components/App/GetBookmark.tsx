@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ShowBookmark from "./ShowBookmark";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = "https://camel-bedclothes.cyclic.app/";
 
-console.log(BACKEND_URL);
+// console.log(BACKEND_URL);
 
 const GetBookmark = () => {
   const [bookmarks, setBookmarks] = useState([]);
@@ -18,9 +20,10 @@ const GetBookmark = () => {
   };
 
   const deleteBookmark = (id) => {
-    axios.delete(`${BACKEND_URL}${id}`).then((res) => {
+    axios.delete(`${BACKEND_URL}bookmarks/${id}`).then((res) => {
       console.log(res);
       setButtonClicked(!buttonClicked);
+      getBookmarkFromURL();
     });
   };
 
@@ -29,7 +32,7 @@ const GetBookmark = () => {
   }, []);
 
   const getBookmarkFromURL = () => {
-    axios.get(BACKEND_URL + "url?url=" + currentTab).then((res) => {
+    axios.get(BACKEND_URL + "bookmarks/search?s=" + currentTab).then((res) => {
       console.log(res.data);
       setBookmarks(res.data);
     });
@@ -47,16 +50,24 @@ const GetBookmark = () => {
 
   return (
     <>
-      <div>
+      {/* <div>
         {bookmarks.map((bookmark) => (
           <div key={bookmark._id}>
             <h1>{bookmark.title}</h1>
             <p>{bookmark.description}</p>
+
             <p>{bookmark.url}</p>
-            <p>{bookmark.tags}</p>
+            <p>
+              {bookmark.tags.map((tag) => (
+                <span>{tag}</span>
+              ))}
+            </p>
             <button onClick={() => deleteBookmark(bookmark._id)}>delete</button>
           </div>
         ))}
+      </div> */}
+      <div>
+        <ShowBookmark bookmarks={bookmarks} />
       </div>
     </>
   );

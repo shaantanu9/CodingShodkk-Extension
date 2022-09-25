@@ -2,11 +2,14 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = "https://camel-bedclothes.cyclic.app/";
+
 const TextBox = () => {
   const [text, setText] = useState("");
   const [currentTab, setCurrentTab] = React.useState(null);
   const [pageTitle, setPageTitle] = React.useState(null);
+  const [postedSuccess, setPostedSuccess] = useState(false);
   const filterYoutubeURL = (url) => {
     if (url.includes("youtube.com")) {
       const youtubeURL = url.split("&");
@@ -28,60 +31,82 @@ const TextBox = () => {
     getCurrent();
   }, []);
 
-  const [post, setPost] = useState({
+  const initialPost = {
     title: pageTitle,
     url: currentTab,
     description: "",
-    tags: [],
-  });
+    tags: "",
+    isPrivate: false,
+    code: "",
+  };
+
+  const [post, setPost] = useState(initialPost);
   const [getBookmarkData, setGetBookmarkData] = useState([]);
 
   const onChangeHandler = (e) => {
+    // for checkbox
+    console.log(
+      e.target.type,
+      "e.target.type",
+      e.target.id,
+      `e.target.id`,
+      e.target.checked,
+      `e.target.checked`
+    );
+    if (e.target.type === "checkbox") {
+      setPost({ ...post, [e.target.id]: e.target.checked });
+      return;
+    }
+
     const { value, id } = e.target;
     if (id === "tags") {
       console.log(value);
       setPost({ ...post, [id]: value.split(",") });
     }
-    console.log("url", currentTab);
+    console.log(post, "post");
     setPost({ ...post, [id]: value });
-  };
-
-  // button to ask user description is code or text
-  const [isCode, setIsCode] = useState(false);
-  const [isText, setIsText] = useState(true);
-  const isCodeHandler = () => {
-    setIsCode(!isCode);
-    setIsText(!isText);
   };
 
   // Post Data
   const bookMark = (e) => {
     e.preventDefault();
-    const url = currentTab;
     const title = post.title;
     const description = post.description;
-    const tags = post.tags[0].split(",");
+    console.log(post.tags, "Post tags Before");
+    let tags = post.tags.split(",");
+    tags = tags.map((tag) => tag.trim());
+    tags = tags.filter((tag) => tag !== "");
+    tags = tags.map((tag) => tag.toLowerCase());
+    tags = [...new Set(tags)];
+
+    console.log(tags, "tags After");
+
     const data = {
       title,
       url: currentTab,
       description,
       tags,
+      code: post.code,
+      isPrivate: post.isPrivate,
     };
     const stringifyData = JSON.stringify(data);
     console.log(stringifyData, "stringifyData");
     description.length > 4 &&
-      axios.post(BACKEND_URL + "bookmarks", data).then((res) => {
-        console.log(res);
-      });
+      axios
+        .post(BACKEND_URL + "bookmarks", data)
+        .then((res) => {
+          console.log(res);
+          setPostedSuccess(true);
+          setTimeout(() => {
+            setPostedSuccess(false);
+          }, 2000);
+          setPost(initialPost);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   };
 
-  const getBookmarkFromURL = () => {
-    axios.get(`${BACKEND_URL}bookmarks/url?url=${currentTab}`).then((res) => {
-      console.log(res.data);
-      setGetBookmarkData(getBookmarkData.concat(res.data));
-      // concat vs push => concat return new array and push return length of array, concat is immutable, push is mutable and concat is better than push because it is immutable
-    });
-  };
   // add style to form in typescript
   const formStyle = {
     container: {
@@ -121,6 +146,7 @@ const TextBox = () => {
           id="title"
           onChange={(e) => onChangeHandler(e)}
           type="text"
+          // required
           autoCapitalize="on"
           autoCorrect="on"
           autoComplete="on"
@@ -135,22 +161,31 @@ const TextBox = () => {
           onChange={(e) => onChangeHandler(e)}
           value={post.description}
           required
+          style={formStyle.input}
+          autoFocus
         ></textarea>
-        {/* radio button to check is code */}
-        <div>
-          <input
-            style={formStyle.input}
-            type="checkbox"
-            id="isCode"
-            name="isCode"
-            value="isCode"
-            onClick={isCodeHandler}
-          />
-          <label style={formStyle.label} htmlFor="isCode">
-            Is Code
-          </label>
-        </div>
         <br />
+        {/* Get Code Snippet as Input */}
+        <label style={formStyle.label} htmlFor="code">
+          Code
+        </label>
+        <textarea
+          style={formStyle.input}
+          id="code"
+          onChange={(e) => onChangeHandler(e)}
+          value={post.code}
+        />
+        <br />
+        <label style={formStyle.label} htmlFor="isPrivate">
+          Is Private
+        </label>
+        <input
+          type="checkbox"
+          id="isPrivate"
+          name="isPrivate"
+          value="isPrivate"
+          onChange={(e) => onChangeHandler(e)}
+        />
         <label style={formStyle.label} htmlFor="tags">
           Tags
         </label>
@@ -162,14 +197,16 @@ const TextBox = () => {
           autoComplete="on"
         />
         <br />
-        {/* Get Code Snippet as Input */}
-        <label style={formStyle.label} htmlFor="code">
-          Code
-        </label>
-        <input style={formStyle.input} type="text" />
-        <br />
         <input style={formStyle.input} type="submit" value="BookMark" />
       </form>
+      <br />
+      {/* If data Posted */}
+      {postedSuccess && (
+        <div>
+          <h1>Bookmark Posted Successfully</h1>
+        </div>
+      )}
+
       <p>{currentTab}</p>
       {/* <button onClick={getBookmarkFromURL}>Get Bookmark</button> */}
     </>
