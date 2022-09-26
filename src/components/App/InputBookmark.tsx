@@ -3,9 +3,12 @@ import { useState } from "react";
 import axios from "axios";
 
 // const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// const BACKEND_URL = "http://localhost:8080/";
 const BACKEND_URL = "https://camel-bedclothes.cyclic.app/";
+// const BACKEND_URL: string = process.env.REACT_APP_BACKEND_URL as string;
 
-const TextBox = () => {
+const TextBox = ({ token }) => {
+  const [tokenFromMain, setTokenFromMain] = useState(token);
   const [text, setText] = useState("");
   const [currentTab, setCurrentTab] = React.useState(null);
   const [pageTitle, setPageTitle] = React.useState(null);
@@ -93,7 +96,11 @@ const TextBox = () => {
     console.log(stringifyData, "stringifyData");
     description.length > 4 &&
       axios
-        .post(BACKEND_URL + "bookmarks", data)
+        .post(BACKEND_URL + "bookmarks", data, {
+          headers: {
+            Authorization: `Bearer ${tokenFromMain}`,
+          },
+        })
         .then((res) => {
           console.log(res);
           setPostedSuccess(true);
@@ -103,7 +110,7 @@ const TextBox = () => {
           setPost(initialPost);
         })
         .catch((err) => {
-          console.log(err);
+          console.log("This is Error Message= ", err);
         });
   };
 

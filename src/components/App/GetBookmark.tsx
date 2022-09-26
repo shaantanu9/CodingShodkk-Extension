@@ -7,7 +7,8 @@ const BACKEND_URL = "https://camel-bedclothes.cyclic.app/";
 
 // console.log(BACKEND_URL);
 
-const GetBookmark = () => {
+const GetBookmark = ({ token }) => {
+  const [tokenFromMain, setTokenFromMain] = useState(token);
   const [bookmarks, setBookmarks] = useState([]);
   const [currentTab, setCurrentTab] = React.useState(null);
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -50,22 +51,6 @@ const GetBookmark = () => {
 
   return (
     <>
-      {/* <div>
-        {bookmarks.map((bookmark) => (
-          <div key={bookmark._id}>
-            <h1>{bookmark.title}</h1>
-            <p>{bookmark.description}</p>
-
-            <p>{bookmark.url}</p>
-            <p>
-              {bookmark.tags.map((tag) => (
-                <span>{tag}</span>
-              ))}
-            </p>
-            <button onClick={() => deleteBookmark(bookmark._id)}>delete</button>
-          </div>
-        ))}
-      </div> */}
       <div>
         <ShowBookmark bookmarks={bookmarks} />
       </div>
