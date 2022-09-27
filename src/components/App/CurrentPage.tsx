@@ -16,6 +16,7 @@ const GetBookmark = ({ token }) => {
 
   const controller = new AbortController();
 
+  // Getting the current tab
   const getCurrent = () => {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
       console.log(tabs[0].url, "tabs[0].url");
@@ -26,6 +27,10 @@ const GetBookmark = ({ token }) => {
 
   useEffect(() => {
     getCurrent();
+
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   const getBookmarkFromURL = (currentTab) => {
@@ -37,7 +42,6 @@ const GetBookmark = ({ token }) => {
         },
       })
       .then((res) => {
-        console.log(res.data, "then");
         console.log(res.data, "then from getBookmarkFromURL");
         setBookmarks(res.data);
         setBookmarksError(false);

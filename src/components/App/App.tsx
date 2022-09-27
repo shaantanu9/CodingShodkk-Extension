@@ -84,9 +84,8 @@ const App = () => {
           bottom: "0", // or bottom: "0"
           padding: "10px", // or margin: "10px"
         }}
-      >
-        <Logout deleteToken={getTokenFromLogin} />
-      </div>
+      ></div>
+      <Logout deleteToken={getTokenFromLogin} />
     </div>
   ) : (
     <Login getTokenFrom={getTokenFromLogin} />

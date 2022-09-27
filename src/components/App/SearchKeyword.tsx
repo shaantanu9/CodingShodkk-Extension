@@ -11,10 +11,19 @@ const GetURL = ({ currentTab, token }) => {
   const [getUrl, setGetUrl] = useState("");
   const [getBookmarkData, setGetBookmarkData] = useState([]);
   const [zeroBookmark, setZeroBookmark] = useState(false);
+
+  const controller = new AbortController();
+
   const onChangeHandler = (e) => {
     const { value, id } = e.target;
     setGetUrl(value);
   };
+
+  useEffect(() => {
+    return () => {
+      controller.abort();
+    };
+  }, []);
 
   const getPersonalBookmarkFromURL = () => {
     setGetBookmarkData([]);
@@ -22,6 +31,7 @@ const GetURL = ({ currentTab, token }) => {
     console.log(getUrl, "GetURL from getBookmarkFromURL", currentTab);
     axios
       .get(`${BACKEND_URL}bookmarks/private/search?s=${getUrl}`, {
+        signal: controller.signal,
         headers: {
           Authorization: `Bearer ${tokenFromMain}`,
         },
@@ -41,6 +51,7 @@ const GetURL = ({ currentTab, token }) => {
     console.log(getUrl, "GetURL from getBookmarkFromURL", currentTab);
     axios
       .get(`${BACKEND_URL}bookmarks/search?s=${getUrl}`, {
+        signal: controller.signal,
         headers: {
           Authorization: `Bearer ${tokenFromMain}`,
         },
@@ -82,6 +93,8 @@ const GetURL = ({ currentTab, token }) => {
           id="url"
           onChange={onChangeHandler}
           onKeyDown={(e) => onEnter(e)}
+          value={getUrl}
+          placeholder="Search Query"
         />
         <br />
         <div style={style.buttondiv}>
