@@ -10,21 +10,17 @@ const BACKEND_URL = "https://camel-bedclothes.cyclic.app/";
 const GetBookmark = ({ token }) => {
   const [tokenFromMain, setTokenFromMain] = useState(token);
   const [bookmarks, setBookmarks] = useState([]);
+  const [bookmarksError, setBookmarksError] = useState(false);
   const [currentTab, setCurrentTab] = React.useState(null);
   const [buttonClicked, setButtonClicked] = useState(false);
 
+  const controller = new AbortController();
+
   const getCurrent = () => {
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-      console.log(tabs[0].url);
-      setCurrentTab(tabs[0].url);
-    });
-  };
-
-  const deleteBookmark = (id) => {
-    axios.delete(`${BACKEND_URL}bookmarks/${id}`).then((res) => {
-      console.log(res);
-      setButtonClicked(!buttonClicked);
-      getBookmarkFromURL();
+      console.log(tabs[0].url, "tabs[0].url");
+      setCurrentTab(() => tabs[0].url);
+      getBookmarkFromURL(tabs[0].url);
     });
   };
 
@@ -32,22 +28,25 @@ const GetBookmark = ({ token }) => {
     getCurrent();
   }, []);
 
-  const getBookmarkFromURL = () => {
-    axios.get(BACKEND_URL + "bookmarks/search?s=" + currentTab).then((res) => {
-      console.log(res.data);
-      setBookmarks(res.data);
-    });
+  const getBookmarkFromURL = (currentTab) => {
+    return axios
+      .get(BACKEND_URL + "bookmarks/private/search?s=" + currentTab, {
+        signal: controller.signal,
+        headers: {
+          Authorization: `Bearer ${tokenFromMain}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data, "then");
+        console.log(res.data, "then from getBookmarkFromURL");
+        setBookmarks(res.data);
+        setBookmarksError(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setBookmarksError(true);
+      });
   };
-
-  useEffect(() => {
-    getBookmarkFromURL();
-    console.log("object from GetBookmark");
-  }, [buttonClicked]);
-
-  if (bookmarks.length === 0) {
-    getBookmarkFromURL();
-    return <div>No Bookmark Found</div>;
-  }
 
   return (
     <>

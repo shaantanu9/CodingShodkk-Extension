@@ -1,8 +1,8 @@
 import React from "react";
 // import App1 from "../../contentScripts"
 import TextBox from "./InputBookmark";
-import GetBookmark from "./GetBookmark";
-import GetURL from "./GetURL";
+import GetBookmark from "./CurrentPage";
+import GetURL from "./SearchKeyword";
 import Login from "./Login";
 import Logout from "./Logout";
 const App = () => {

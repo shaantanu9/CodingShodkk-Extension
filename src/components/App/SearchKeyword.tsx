@@ -27,7 +27,7 @@ const GetURL = ({ currentTab, token }) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data, "then from getPersonalBookmarkFromURL");
         if (res.data.length === 0) {
           // alert("No Bookmark Found");
           return <div>No Bookmark Found</div>;
@@ -46,12 +46,15 @@ const GetURL = ({ currentTab, token }) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data, "then from getBookmarkFromURL");
         if (res.data.length === 0) {
           // alert("No Bookmark Found");
           return <div>No Bookmark Found</div>;
         }
         setGetBookmarkData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -85,7 +88,7 @@ const GetURL = ({ currentTab, token }) => {
           <button onClick={getPersonalBookmarkFromURL}>Get My Bookmark</button>
           <button onClick={getBookmarkFromURL}>Get Bookmark</button>
         </div>
-        <p>{getUrl}</p>
+        <p>searchTearm: {getUrl} </p>
       </div>
       <ShowBookmark bookmarks={getBookmarkData} />
       <br />
