@@ -3,7 +3,7 @@ import axios from "axios";
 import ShowBookmark from "./ShowBookmark";
 
 // const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const BACKEND_URL = "https://camel-bedclothes.cyclic.app/";
+const BACKEND_URL = "https://camel-bedclothes.cyclic.app";
 
 // console.log(BACKEND_URL);
 
@@ -35,7 +35,7 @@ const GetBookmark = ({ token }) => {
 
   const getBookmarkFromURL = (currentTab) => {
     return axios
-      .get(BACKEND_URL + "bookmarks/private/search?s=" + currentTab, {
+      .get(BACKEND_URL + "/bookmarks/private/search?s=" + currentTab, {
         signal: controller.signal,
         headers: {
           Authorization: `Bearer ${tokenFromMain}`,

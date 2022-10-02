@@ -21,6 +21,7 @@ const GetURL = ({ currentTab, token }) => {
 
   useEffect(() => {
     return () => {
+      console.log("unmounting...");
       controller.abort();
     };
   }, []);
