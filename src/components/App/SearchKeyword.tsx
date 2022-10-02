@@ -3,8 +3,8 @@ import axios from "axios";
 import ShowBookmark from "./ShowBookmark";
 
 // const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const BACKEND_URL = "https://camel-bedclothes.cyclic.app/";
-// const BACKEND_URL = "http://localhost:8080/";
+const BACKEND_URL = "https://camel-bedclothes.cyclic.app";
+// const BACKEND_URL = "http://localhost:8080";
 
 const GetURL = ({ currentTab, token }) => {
   const [tokenFromMain, setTokenFromMain] = useState(token);
@@ -30,7 +30,7 @@ const GetURL = ({ currentTab, token }) => {
     if (getUrl === "") setGetUrl(currentTab);
     console.log(getUrl, "GetURL from getBookmarkFromURL", currentTab);
     axios
-      .get(`${BACKEND_URL}bookmarks/private/search?s=${getUrl}`, {
+      .get(`${BACKEND_URL}/bookmarks/private/search?s=${getUrl}`, {
         signal: controller.signal,
         headers: {
           Authorization: `Bearer ${tokenFromMain}`,
@@ -50,7 +50,7 @@ const GetURL = ({ currentTab, token }) => {
     if (getUrl === "") setGetUrl(currentTab);
     console.log(getUrl, "GetURL from getBookmarkFromURL", currentTab);
     axios
-      .get(`${BACKEND_URL}bookmarks/search?s=${getUrl}`, {
+      .get(`${BACKEND_URL}/bookmarks/search?s=${getUrl}`, {
         signal: controller.signal,
         headers: {
           Authorization: `Bearer ${tokenFromMain}`,

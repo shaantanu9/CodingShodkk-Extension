@@ -50,8 +50,8 @@ const App: React.FC<{}> = () => {
   }
   // get the tag by attribute
   useEffect(() => {
-    getTagByAttribute('data-testid="email-input"', "eve.holt@reqres.in");
-    getTagByAttribute('data-testid="password-input"', "cityslicka");
+    getTagByAttribute('type="email"', "eve.holt@reqres.in");
+    getTagByAttribute('type="password"', "cityslicka");
   }, []);
 
   return <h1>Content Script</h1>;

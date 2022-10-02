@@ -3,18 +3,24 @@ import { useState } from "react";
 import axios from "axios";
 
 // const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-// const BACKEND_URL = "http://localhost:8080/";
-const BACKEND_URL = "https://camel-bedclothes.cyclic.app/";
+// const BACKEND_URL = "http://localhost:8080";
+const BACKEND_URL = "https://camel-bedclothes.cyclic.app";
 // const BACKEND_URL: string = process.env.REACT_APP_BACKEND_URL as string;
 
 const TextBox = ({ token }) => {
+  console.log(token, "token from TextBox");
   const [tokenFromMain, setTokenFromMain] = useState(token);
+  const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
   const [currentTab, setCurrentTab] = React.useState(null);
   const [pageTitle, setPageTitle] = React.useState(null);
   const [postedSuccess, setPostedSuccess] = useState(false);
   const filterYoutubeURL = (url) => {
-    if (url.includes("youtube.com")) {
+    if (
+      url.includes("youtube.com") ||
+      url.includes("youtu.be") ||
+      url.includes("&")
+    ) {
       const youtubeURL = url.split("&");
       return youtubeURL[0];
     } else {
@@ -40,6 +46,7 @@ const TextBox = ({ token }) => {
     description: "",
     tags: "",
     isPrivate: false,
+    isError: false,
     code: "",
   };
 
@@ -54,19 +61,21 @@ const TextBox = ({ token }) => {
       e.target.id,
       `e.target.id`,
       e.target.checked,
-      `e.target.checked`
+      `e.target.checked`,
+      token,
+      tokenFromMain
     );
     if (e.target.type === "checkbox") {
       setPost({ ...post, [e.target.id]: e.target.checked });
       return;
     }
-
+    console.log(token, "token from onChangeHandler");
     const { value, id } = e.target;
     if (id === "tags") {
       console.log(value);
       setPost({ ...post, [id]: value.split(",") });
     }
-    console.log(post, "post");
+    console.log(post, "post", tokenFromMain, "tokenFromMain");
     setPost({ ...post, [id]: value });
   };
 
@@ -91,19 +100,23 @@ const TextBox = ({ token }) => {
       tags,
       code: post.code,
       isPrivate: post.isPrivate,
+      isError: post.isError,
     };
     const stringifyData = JSON.stringify(data);
     console.log(stringifyData, "stringifyData");
-    description.length > 4 &&
+    if (description.length > 4) {
+      setLoading(true);
       axios
-        .post(BACKEND_URL + "bookmarks", data, {
+        .post(BACKEND_URL + "/bookmarks", data, {
           headers: {
             Authorization: `Bearer ${tokenFromMain}`,
           },
         })
         .then((res) => {
           console.log(res);
+          console.log(res.data, "res.data");
           setPostedSuccess(true);
+          setLoading(false);
           setTimeout(() => {
             setPostedSuccess(false);
           }, 2000);
@@ -112,6 +125,7 @@ const TextBox = ({ token }) => {
         .catch((err) => {
           console.log("This is Error Message= ", err);
         });
+    }
   };
 
   // add style to form in typescript
@@ -183,16 +197,34 @@ const TextBox = ({ token }) => {
           value={post.code}
         />
         <br />
-        <label style={formStyle.label} htmlFor="isPrivate">
-          Is Private
-        </label>
-        <input
-          type="checkbox"
-          id="isPrivate"
-          name="isPrivate"
-          value="isPrivate"
-          onChange={(e) => onChangeHandler(e)}
-        />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <label style={formStyle.label} htmlFor="isPrivate">
+            Is Private
+          </label>
+          <input
+            type="checkbox"
+            id="isPrivate"
+            name="isPrivate"
+            value="isPrivate"
+            onChange={(e) => onChangeHandler(e)}
+          />
+          <label style={formStyle.label} htmlFor="isPrivate">
+            Is this Error
+          </label>
+          <input
+            type="checkbox"
+            id="isError"
+            name="isError"
+            value="isError"
+            onChange={(e) => onChangeHandler(e)}
+          />
+        </div>
         <label style={formStyle.label} htmlFor="tags">
           Tags
         </label>
@@ -208,6 +240,11 @@ const TextBox = ({ token }) => {
       </form>
       <br />
       {/* If data Posted */}
+      {loading && (
+        <div>
+          <h1>Posting Please wait</h1>
+        </div>
+      )}
       {postedSuccess && (
         <div>
           <h1>Bookmark Posted Successfully</h1>

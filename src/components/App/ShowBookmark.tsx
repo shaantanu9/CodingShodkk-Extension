@@ -2,14 +2,14 @@ import axios from "axios";
 import React from "react";
 
 // const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const BACKEND_URL = "https://camel-bedclothes.cyclic.app/";
+const BACKEND_URL = "https://camel-bedclothes.cyclic.app";
 
 const ShowBookmark = ({ bookmarks }) => {
   const [stateChange, setStateChange] = React.useState(false);
 
   const deleteBookmark = (id) => {
     console.log("deleteBookmark", id);
-    axios.delete(`${BACKEND_URL}bookmarks/${id}`).then((res) => {
+    axios.delete(`${BACKEND_URL}/bookmarks/${id}`).then((res) => {
       console.log(res);
       setStateChange(!stateChange);
     });
