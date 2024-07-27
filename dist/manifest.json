@@ -1,17 +1,21 @@
 {
   "manifest_version": 3,
-  "name": "Bookmark Manager Save the link and notes",
+  "name": "Dee Second Brain",
   "description": "An Chrome Extension to save the link and notes",
   "version": "1.0.0",
   "icons": {
-    "16": "logo.svg",
-    "48": "logo.svg",
-    "128": "logo.svg"
+    "16": "logo16.png",
+    "48": "logo48.png",
+    "128": "logo120.png"
   },
   "action": {
     "default_title": "Bookmark Link and Notes",
     "default_popup": "popup.html",
-    "default_icon": "logo.svg"
+    "default_icon": {
+      "16": "logo16.png",
+      "48": "logo48.png",
+      "128": "logo120.png"
+    }
   },
   "background": {
     "service_worker": "background.js"
@@ -23,6 +27,33 @@
       "css": ["contentScript.css"]
     }
   ],
-  "permissions": ["tabs", "*://*/*", "storage", "activeTab", "webRequest"],
-  "options_page": "options.html"
+
+  "permissions": [
+    "tabs",
+    "*://*/*",
+    "storage",
+    "activeTab",
+    "webRequest",
+    "contextMenus",
+    "scripting",
+    "webNavigation",
+    "clipboardWrite",
+    "clipboardRead",
+    "http://localhost:3000/*",
+    "favicon",
+    "bookmarks"
+  ],
+  "options_page": "options.html",
+  "commands": {
+    "open_popup": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P",
+        "mac": "Command+Shift+P"
+      },
+      "description": "Open the popup"
+    }
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  }
 }

@@ -4,13 +4,10 @@ import * as React from "react";
 import { useContext } from "react";
 import axios from "axios";
 import { StateContext } from "../context/StateContext";
-const BACKEND_URL = "https://camel-bedclothes.cyclic.app";
-// const BACKEND_URL = "http://localhost:8080";
+import { _userAccountService } from "../../utils/services";
 
 const Login = ({ getTokenFrom }) => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [keepMeLogin, setKeepMeLogin] = React.useState(false);
+  const [token, settoken] = React.useState("");
   const [error, setError] = React.useState("");
 
   const state = useContext(StateContext);
@@ -18,20 +15,20 @@ const Login = ({ getTokenFrom }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (email === "" || password === "") {
+    if (token === "") {
       setError("Please fill all the fields");
     } else {
       setError("");
-      return axios
-        .post(BACKEND_URL + "/users/login", {
-          email,
-          password,
-          keepMeLogin,
-        })
+
+      _userAccountService
+        .loginWithToken({ token })
         .then((res) => {
-          console.log("TOKEN res.data", res.data);
-          chrome.storage.sync.set({ token: res.data.token }, () => {
-            getTokenFrom(res.data.token);
+          console.log("TOKEN res.data login 26", {
+            resData: res.data,
+            token: res?.data?.token,
+          });
+          chrome.storage.sync.set({ token: res?.data?.token, user:res?.data?.user }, () => {
+            getTokenFrom(res?.data?.token);
             console.log("saved");
           });
         })
@@ -43,52 +40,94 @@ const Login = ({ getTokenFrom }) => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
+    <form
+      onSubmit={handleLogin}
+      style={{
+        display: "flex",
+        width: "100%",
+        justifyContent: "between",
+        alignItems: "center",
+        // height: "100vh",
+        backgroundColor: "#f1f1f1",
+        borderRadius: "30px",
+      }}
+    >
       <div className="login">
         <div className="login__container">
-          <h1>Login Shodkk</h1>
-          <input
-            type="text"
-            placeholder="Email"
-            value={email}
+          <h1>Login Dee Second Brain</h1>
+          <textarea
+            placeholder="Token"
+            value={token}
             required
-            autoComplete="on"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            required
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => settoken(e.target.value)}
+            style={{
+              marginBottom: "5px",
+              padding: "5px",
+              borderRadius: "5px",
+              width: "96%",
+              height: "40px",
+              // border color 6A46F9
+              border: "1px solid #4456FF",
+            }}
           />
           <br></br>
           <div className="error">{error}</div>
           <br></br>
-          <div>
-            <input
-              type="checkbox"
-              name="keepMeLogin"
-              id="keepMeLogin"
-              onChange={(e) => setKeepMeLogin(e.target.checked)}
-            />
-            <label htmlFor="keepMeLogin">Keep me login</label>
-          </div>
-          <div>
-            <p>
-              <a href="https://google.com" target="_blank">
-                Forgot Password?
-              </a>
-            </p>
-            <p>
-              <a href="https://google.com" target="_blank">
-                Create an Account
-              </a>
-            </p>
-          </div>
 
-          <input type="submit" value="Login" />
-          {/* <button onClick={handleLogin}>Login</button> */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <button
+              style={{
+                backgroundColor: "#4456FF",
+                color: "white",
+                padding: "10px",
+                textAlign: "center",
+                textDecoration: "none",
+                display: "inline-block",
+                fontSize: "16px",
+                margin: "4px 2px",
+                cursor: "pointer",
+                borderRadius: "12px",
+                border: "none",
+                // width: "87%",
+              }}
+            >
+              <a
+                style={{
+                  backgroundColor: "#4456FF",
+                  color: "white",
+                  textDecoration: "none",
+                }}
+                href="https://ai.soobati.com/auth/sign-up"
+                target="_blank"
+              >
+                SignUp
+              </a>
+            </button>
+            <input
+              style={{
+                backgroundColor: "#4456FF",
+                color: "white",
+                padding: "10px",
+                textAlign: "center",
+                textDecoration: "none",
+                display: "inline-block",
+                fontSize: "16px",
+                margin: "4px 2px",
+                cursor: "pointer",
+                borderRadius: "12px",
+                border: "none",
+                // width: "87%",
+              }}
+              type="submit"
+              value="Login"
+            />
+          </div>
         </div>
       </div>
     </form>

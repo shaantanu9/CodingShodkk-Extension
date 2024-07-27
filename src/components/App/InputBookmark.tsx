@@ -1,134 +1,167 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { fetchVideoDetails } from "../../utils/subtitle";
+import { generateContent } from "../../utils/gemeniModel";
+import { _bookmarkAccountService } from "../../utils/services";
 
-// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-// const BACKEND_URL = "http://localhost:8080";
 const BACKEND_URL = "https://camel-bedclothes.cyclic.app";
-// const BACKEND_URL: string = process.env.REACT_APP_BACKEND_URL as string;
+const intialState = {
+  title: "",
+  url: "",
+  description: "",
+  tags: [],
+  isPrivate: false,
+  isError: false,
+  code: "",
+  summary: "",
+};
 
 const TextBox = ({ token }) => {
-  console.log(token, "token from TextBox");
   const [tokenFromMain, setTokenFromMain] = useState(token);
   const [loading, setLoading] = useState(false);
-  const [text, setText] = useState("");
-  const [currentTab, setCurrentTab] = React.useState(null);
-  const [pageTitle, setPageTitle] = React.useState(null);
+  const [currentTab, setCurrentTab] = useState(null);
+  const [pageTitle, setPageTitle] = useState(null);
   const [postedSuccess, setPostedSuccess] = useState(false);
-  const filterYoutubeURL = (url) => {
+  const [post, setPost] = useState(intialState);
+
+  const isYoutubeURL = (url) => {
     if (
       url.includes("youtube.com") ||
       url.includes("youtu.be") ||
       url.includes("&")
     ) {
-      const youtubeURL = url.split("&");
-      return youtubeURL[0];
-    } else {
-      return url;
+      return true;
     }
+    return false;
   };
 
-  const getCurrent = () => {
-    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-      setCurrentTab(filterYoutubeURL(tabs[0].url));
+  const getCurrentTab = useCallback(() => {
+    chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
+      const tabUrl = isYoutubeURL(tabs[0].url)
+        ? tabs[0].url.split("&")[0]
+        : tabs[0].url;
+      setCurrentTab(tabUrl);
       setPageTitle(tabs[0].title);
-      console.log("title", tabs[0].title);
+      setPost((prevPost) => ({
+        ...prevPost,
+        url: tabUrl,
+        title: tabs[0].title,
+      }));
     });
-  };
-
-  React.useEffect(() => {
-    getCurrent();
   }, []);
 
-  const initialPost = {
-    title: pageTitle,
-    url: currentTab,
-    description: "",
-    tags: "",
-    isPrivate: false,
-    isError: false,
-    code: "",
+  useEffect(() => {
+    getCurrentTab();
+  }, [getCurrentTab]);
+
+  const handleInputChange = (e) => {
+    const { id, value, type, checked } = e.target;
+    setPost((prevPost) => ({
+      ...prevPost,
+      [id]:
+        type === "checkbox"
+          ? checked
+          : id === "tags"
+          ? value.split(",")
+          : value,
+    }));
   };
 
-  const [post, setPost] = useState(initialPost);
-  const [getBookmarkData, setGetBookmarkData] = useState([]);
 
-  const onChangeHandler = (e) => {
-    // for checkbox
-    console.log(
-      e.target.type,
-      "e.target.type",
-      e.target.id,
-      `e.target.id`,
-      e.target.checked,
-      `e.target.checked`,
-      token,
-      tokenFromMain
-    );
-    if (e.target.type === "checkbox") {
-      setPost({ ...post, [e.target.id]: e.target.checked });
-      return;
-    }
-    console.log(token, "token from onChangeHandler");
-    const { value, id } = e.target;
-    if (id === "tags") {
-      console.log(value);
-      setPost({ ...post, [id]: value.split(",") });
-    }
-    console.log(post, "post", tokenFromMain, "tokenFromMain");
-    setPost({ ...post, [id]: value });
-  };
+  // useEffect(() => {
+  //   console.log("Inside useEffect from InputBookmark.tsx")
+  //   console.log("Inside useEffect from InputBookmark.tsx")
+  //   console.log("Inside useEffect from InputBookmark.tsx")
+  //   console.log("Inside useEffect from InputBookmark.tsx")
+  //   let { innerText, innerHTML } = document.body;
+  //   let description:any = document.querySelector('meta[name="description"]');
+  //   let keyword:any = document.querySelector('meta[name="keywords"]');
+  //   let title:any = document.title;
 
-  // Post Data
-  const bookMark = (e) => {
+  //   const handleMessage = async (message) => {
+  //     if (message.action === "bookmarkSaved") {
+  //       console.log("Bookmark saved successfully!", {
+  //         innerText: document.body.innerText,
+  //         data: message.data,
+  //         url: message.data.url,
+  //       });
+
+  //       await _bookmarkAccountService.createBookmark({
+  //         title,
+  //         url: window.location.href,
+  //         text: innerText,
+  //         html: innerHTML,
+  //         description: description?.content,
+  //         tags: keyword?.content.split(",") || [],
+  //       });
+
+  //       // setData(message.data);
+  //       // setNotification(true);
+  //       // setTimeout(() => setNotification(false), 3000); // Hide after 3 seconds
+  //     }
+  //   };
+
+  //   chrome.runtime.onMessage.addListener(handleMessage);
+  // }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const title = post.title;
-    const description = post.description;
-    console.log(post.tags, "Post tags Before");
-    let tags = post.tags.split(",");
-    tags = tags.map((tag) => tag.trim());
-    tags = tags.filter((tag) => tag !== "");
-    tags = tags.map((tag) => tag.toLowerCase());
-    tags = [...new Set(tags)];
+    let tags: any = post.tags;
+    tags = tags.map((tag) => tag.trim().toLowerCase()).filter((tag) => tag);
+    const uniqueTags = [...new Set(tags)];
 
-    console.log(tags, "tags After");
+    try {
+      if (isYoutubeURL(currentTab)) {
+        const youtubeId = currentTab.split("v=")[1];
+        const videoDetails = await fetchVideoDetails(youtubeId);
+        const subtitleText = videoDetails.subtitles
+          .map((sub) => sub.text)
+          .join(" ");
+        const summaryContent = await generateContent(
+          `this is youtube video subtitle, give detail pointwise summary of this and if ${videoDetails.title} content number means video explain certain ponints then mentions that all also this is subtitle ${subtitleText}, if `
+        );
 
-    const data = {
-      title,
-      url: currentTab,
-      description,
-      tags,
-      code: post.code,
-      isPrivate: post.isPrivate,
-      isError: post.isError,
-    };
-    const stringifyData = JSON.stringify(data);
-    console.log(stringifyData, "stringifyData");
-    if (description.length > 4) {
-      setLoading(true);
-      axios
-        .post(BACKEND_URL + "/bookmarks", data, {
-          headers: {
-            Authorization: `Bearer ${tokenFromMain}`,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          console.log(res.data, "res.data");
+        const data = {
+          ...post,
+          description: videoDetails.description,
+          title: videoDetails.title,
+          tags: uniqueTags,
+          summary: summaryContent,
+        };
+
+        if (data.description.length > 4) {
+          setLoading(true);
+          // const response = await axios.post(`${BACKEND_URL}/bookmarks`, data, {
+          //   headers: {
+          //     Authorization: `Bearer ${tokenFromMain}`,
+          //   },
+          // });
+
+          const response = await _bookmarkAccountService.createBookmark(data);
           setPostedSuccess(true);
           setLoading(false);
-          setTimeout(() => {
-            setPostedSuccess(false);
-          }, 2000);
-          setPost(initialPost);
-        })
-        .catch((err) => {
-          console.log("This is Error Message= ", err);
-        });
+          setTimeout(() => setPostedSuccess(false), 2000);
+          setPost(intialState);
+        }
+      } else {
+        const data = {
+          ...post,
+          tags: uniqueTags,
+        };
+        if (data.description.length > 4) {
+          setLoading(true);
+          const response = await _bookmarkAccountService.createBookmark(data);
+          setPostedSuccess(true);
+          setLoading(false);
+          setTimeout(() => setPostedSuccess(false), 2000);
+          setPost(intialState);
+        }
+      }
+    } catch (error) {
+      console.error("Error while posting bookmark:", error);
     }
   };
 
-  // add style to form in typescript
   const formStyle = {
     container: {
       display: "flex",
@@ -140,24 +173,27 @@ const TextBox = ({ token }) => {
     input: {
       width: "80%",
       height: "20%",
+      marginBottom: "10px",
     },
     button: {
       width: "100%",
       height: "30px",
+      marginTop: "10px",
     },
     label: {
       width: "100%",
       height: "30px",
-      marginBottom: "1px",
+      marginBottom: "5px",
     },
-  } as const;
+  };
 
   return (
     <>
-      <form onSubmit={bookMark} style={formStyle.container}>
-        {/* <label style={formStyle.label} htmlFor="url">URL</label> */}
-        {/* <input style={formStyle.input} id="url" type="text" value={currentTab} /> */}
-        <br />
+      <form
+        onSubmit={handleSubmit}
+        //  style={formStyle.container}
+        className="flex flex-col justify-center items-center form"
+      >
         <label style={formStyle.label} htmlFor="title">
           Title
         </label>
@@ -165,38 +201,33 @@ const TextBox = ({ token }) => {
           style={formStyle.input}
           value={post.title}
           id="title"
-          onChange={(e) => onChangeHandler(e)}
+          onChange={handleInputChange}
           type="text"
-          // required
           autoCapitalize="on"
           autoCorrect="on"
           autoComplete="on"
           autoSave="on"
         />
-        <br />
         <label style={formStyle.label} htmlFor="description">
           Description
         </label>
         <textarea
           id="description"
-          onChange={(e) => onChangeHandler(e)}
+          onChange={handleInputChange}
           value={post.description}
           required
           style={formStyle.input}
           autoFocus
-        ></textarea>
-        <br />
-        {/* Get Code Snippet as Input */}
+        />
         <label style={formStyle.label} htmlFor="code">
           Code
         </label>
         <textarea
           style={formStyle.input}
           id="code"
-          onChange={(e) => onChangeHandler(e)}
+          onChange={handleInputChange}
           value={post.code}
         />
-        <br />
         <div
           style={{
             display: "flex",
@@ -210,19 +241,17 @@ const TextBox = ({ token }) => {
           <input
             type="checkbox"
             id="isPrivate"
-            name="isPrivate"
-            value="isPrivate"
-            onChange={(e) => onChangeHandler(e)}
+            onChange={handleInputChange}
+            checked={post.isPrivate}
           />
-          <label style={formStyle.label} htmlFor="isPrivate">
+          <label style={formStyle.label} htmlFor="isError">
             Is this Error
           </label>
           <input
             type="checkbox"
             id="isError"
-            name="isError"
-            value="isError"
-            onChange={(e) => onChangeHandler(e)}
+            onChange={handleInputChange}
+            checked={post.isError}
           />
         </div>
         <label style={formStyle.label} htmlFor="tags">
@@ -232,27 +261,13 @@ const TextBox = ({ token }) => {
           style={formStyle.input}
           value={post.tags}
           id="tags"
-          onChange={(e) => onChangeHandler(e)}
+          onChange={handleInputChange}
           autoComplete="on"
         />
-        <br />
-        <input style={formStyle.input} type="submit" value="BookMark" />
+        <input style={formStyle.button} type="submit" value="Bookmark" />
       </form>
-      <br />
-      {/* If data Posted */}
-      {loading && (
-        <div>
-          <h1>Posting Please wait</h1>
-        </div>
-      )}
-      {postedSuccess && (
-        <div>
-          <h1>Bookmark Posted Successfully</h1>
-        </div>
-      )}
-
-      <p>{currentTab}</p>
-      {/* <button onClick={getBookmarkFromURL}>Get Bookmark</button> */}
+      {loading && <h1>Posting Please wait</h1>}
+      {postedSuccess && <h1>Bookmark Posted Successfully</h1>}
     </>
   );
 };
