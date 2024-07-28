@@ -10,7 +10,7 @@ import { _userAccountService, _taskService } from "../../utils/services";
 const ProfileTab = ({ userData, setToken }) => {
   const [analytics, setAnalytics] = useState(null);
   const [user, setUser] = useState(null);
-  const primaryColor = "#4456FF";
+  // const primaryColor = "#4456FF";
 
   const refreshAnalytics = async () => {
     const analyticsData = await _userAccountService.getAnalytics();
@@ -145,12 +145,12 @@ const ProfileTab = ({ userData, setToken }) => {
             <h4
               style={{ fontSize: "24px", fontWeight: "bold", color: "#4456FF" }}
             >
-              {item.value}
+              {item?.value}
             </h4>
             <p
               style={{ fontSize: "14px", fontWeight: "normal", color: "gray" }}
             >
-              {item.label}
+              {item?.label}
             </p>
           </div>
         ))}
@@ -425,7 +425,7 @@ const JournalTab = ({ userData }) => {
   );
 };
 
-const TaskTab = ({ fromPage, taskData, setTasks, tasks }) => {
+const TaskTab = ({ fromPage, taskData, setTasks, tasks }:any) => {
   const primaryColor = "#4456FF";
 
   const initialInput = taskData || {

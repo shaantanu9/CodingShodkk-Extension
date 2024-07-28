@@ -1,1317 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/@google/generative-ai/dist/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@google/generative-ai/dist/index.js ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-
-/**
- * Contains the list of OpenAPI data types
- * as defined by https://swagger.io/docs/specification/data-models/data-types/
- * @public
- */
-exports.FunctionDeclarationSchemaType = void 0;
-(function (FunctionDeclarationSchemaType) {
-    /** String type. */
-    FunctionDeclarationSchemaType["STRING"] = "STRING";
-    /** Number type. */
-    FunctionDeclarationSchemaType["NUMBER"] = "NUMBER";
-    /** Integer type. */
-    FunctionDeclarationSchemaType["INTEGER"] = "INTEGER";
-    /** Boolean type. */
-    FunctionDeclarationSchemaType["BOOLEAN"] = "BOOLEAN";
-    /** Array type. */
-    FunctionDeclarationSchemaType["ARRAY"] = "ARRAY";
-    /** Object type. */
-    FunctionDeclarationSchemaType["OBJECT"] = "OBJECT";
-})(exports.FunctionDeclarationSchemaType || (exports.FunctionDeclarationSchemaType = {}));
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Possible roles.
- * @public
- */
-const POSSIBLE_ROLES = ["user", "model", "function", "system"];
-/**
- * Harm categories that would cause prompts or candidates to be blocked.
- * @public
- */
-exports.HarmCategory = void 0;
-(function (HarmCategory) {
-    HarmCategory["HARM_CATEGORY_UNSPECIFIED"] = "HARM_CATEGORY_UNSPECIFIED";
-    HarmCategory["HARM_CATEGORY_HATE_SPEECH"] = "HARM_CATEGORY_HATE_SPEECH";
-    HarmCategory["HARM_CATEGORY_SEXUALLY_EXPLICIT"] = "HARM_CATEGORY_SEXUALLY_EXPLICIT";
-    HarmCategory["HARM_CATEGORY_HARASSMENT"] = "HARM_CATEGORY_HARASSMENT";
-    HarmCategory["HARM_CATEGORY_DANGEROUS_CONTENT"] = "HARM_CATEGORY_DANGEROUS_CONTENT";
-})(exports.HarmCategory || (exports.HarmCategory = {}));
-/**
- * Threshold above which a prompt or candidate will be blocked.
- * @public
- */
-exports.HarmBlockThreshold = void 0;
-(function (HarmBlockThreshold) {
-    // Threshold is unspecified.
-    HarmBlockThreshold["HARM_BLOCK_THRESHOLD_UNSPECIFIED"] = "HARM_BLOCK_THRESHOLD_UNSPECIFIED";
-    // Content with NEGLIGIBLE will be allowed.
-    HarmBlockThreshold["BLOCK_LOW_AND_ABOVE"] = "BLOCK_LOW_AND_ABOVE";
-    // Content with NEGLIGIBLE and LOW will be allowed.
-    HarmBlockThreshold["BLOCK_MEDIUM_AND_ABOVE"] = "BLOCK_MEDIUM_AND_ABOVE";
-    // Content with NEGLIGIBLE, LOW, and MEDIUM will be allowed.
-    HarmBlockThreshold["BLOCK_ONLY_HIGH"] = "BLOCK_ONLY_HIGH";
-    // All content will be allowed.
-    HarmBlockThreshold["BLOCK_NONE"] = "BLOCK_NONE";
-})(exports.HarmBlockThreshold || (exports.HarmBlockThreshold = {}));
-/**
- * Probability that a prompt or candidate matches a harm category.
- * @public
- */
-exports.HarmProbability = void 0;
-(function (HarmProbability) {
-    // Probability is unspecified.
-    HarmProbability["HARM_PROBABILITY_UNSPECIFIED"] = "HARM_PROBABILITY_UNSPECIFIED";
-    // Content has a negligible chance of being unsafe.
-    HarmProbability["NEGLIGIBLE"] = "NEGLIGIBLE";
-    // Content has a low chance of being unsafe.
-    HarmProbability["LOW"] = "LOW";
-    // Content has a medium chance of being unsafe.
-    HarmProbability["MEDIUM"] = "MEDIUM";
-    // Content has a high chance of being unsafe.
-    HarmProbability["HIGH"] = "HIGH";
-})(exports.HarmProbability || (exports.HarmProbability = {}));
-/**
- * Reason that a prompt was blocked.
- * @public
- */
-exports.BlockReason = void 0;
-(function (BlockReason) {
-    // A blocked reason was not specified.
-    BlockReason["BLOCKED_REASON_UNSPECIFIED"] = "BLOCKED_REASON_UNSPECIFIED";
-    // Content was blocked by safety settings.
-    BlockReason["SAFETY"] = "SAFETY";
-    // Content was blocked, but the reason is uncategorized.
-    BlockReason["OTHER"] = "OTHER";
-})(exports.BlockReason || (exports.BlockReason = {}));
-/**
- * Reason that a candidate finished.
- * @public
- */
-exports.FinishReason = void 0;
-(function (FinishReason) {
-    // Default value. This value is unused.
-    FinishReason["FINISH_REASON_UNSPECIFIED"] = "FINISH_REASON_UNSPECIFIED";
-    // Natural stop point of the model or provided stop sequence.
-    FinishReason["STOP"] = "STOP";
-    // The maximum number of tokens as specified in the request was reached.
-    FinishReason["MAX_TOKENS"] = "MAX_TOKENS";
-    // The candidate content was flagged for safety reasons.
-    FinishReason["SAFETY"] = "SAFETY";
-    // The candidate content was flagged for recitation reasons.
-    FinishReason["RECITATION"] = "RECITATION";
-    // Unknown reason.
-    FinishReason["OTHER"] = "OTHER";
-})(exports.FinishReason || (exports.FinishReason = {}));
-/**
- * Task type for embedding content.
- * @public
- */
-exports.TaskType = void 0;
-(function (TaskType) {
-    TaskType["TASK_TYPE_UNSPECIFIED"] = "TASK_TYPE_UNSPECIFIED";
-    TaskType["RETRIEVAL_QUERY"] = "RETRIEVAL_QUERY";
-    TaskType["RETRIEVAL_DOCUMENT"] = "RETRIEVAL_DOCUMENT";
-    TaskType["SEMANTIC_SIMILARITY"] = "SEMANTIC_SIMILARITY";
-    TaskType["CLASSIFICATION"] = "CLASSIFICATION";
-    TaskType["CLUSTERING"] = "CLUSTERING";
-})(exports.TaskType || (exports.TaskType = {}));
-/**
- * @public
- */
-exports.FunctionCallingMode = void 0;
-(function (FunctionCallingMode) {
-    // Unspecified function calling mode. This value should not be used.
-    FunctionCallingMode["MODE_UNSPECIFIED"] = "MODE_UNSPECIFIED";
-    // Default model behavior, model decides to predict either a function call
-    // or a natural language repspose.
-    FunctionCallingMode["AUTO"] = "AUTO";
-    // Model is constrained to always predicting a function call only.
-    // If "allowed_function_names" are set, the predicted function call will be
-    // limited to any one of "allowed_function_names", else the predicted
-    // function call will be any one of the provided "function_declarations".
-    FunctionCallingMode["ANY"] = "ANY";
-    // Model will not predict any function call. Model behavior is same as when
-    // not passing any function declarations.
-    FunctionCallingMode["NONE"] = "NONE";
-})(exports.FunctionCallingMode || (exports.FunctionCallingMode = {}));
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Basic error type for this SDK.
- * @public
- */
-class GoogleGenerativeAIError extends Error {
-    constructor(message) {
-        super(`[GoogleGenerativeAI Error]: ${message}`);
-    }
-}
-/**
- * Errors in the contents of a response from the model. This includes parsing
- * errors, or responses including a safety block reason.
- * @public
- */
-class GoogleGenerativeAIResponseError extends GoogleGenerativeAIError {
-    constructor(message, response) {
-        super(message);
-        this.response = response;
-    }
-}
-/**
- * Error class covering HTTP errors when calling the server. Includes HTTP
- * status, statusText, and optional details, if provided in the server response.
- * @public
- */
-class GoogleGenerativeAIFetchError extends GoogleGenerativeAIError {
-    constructor(message, status, statusText, errorDetails) {
-        super(message);
-        this.status = status;
-        this.statusText = statusText;
-        this.errorDetails = errorDetails;
-    }
-}
-/**
- * Errors in the contents of a request originating from user input.
- * @public
- */
-class GoogleGenerativeAIRequestInputError extends GoogleGenerativeAIError {
-}
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const DEFAULT_BASE_URL = "https://generativelanguage.googleapis.com";
-const DEFAULT_API_VERSION = "v1beta";
-/**
- * We can't `require` package.json if this runs on web. We will use rollup to
- * swap in the version number here at build time.
- */
-const PACKAGE_VERSION = "0.13.0";
-const PACKAGE_LOG_HEADER = "genai-js";
-var Task;
-(function (Task) {
-    Task["GENERATE_CONTENT"] = "generateContent";
-    Task["STREAM_GENERATE_CONTENT"] = "streamGenerateContent";
-    Task["COUNT_TOKENS"] = "countTokens";
-    Task["EMBED_CONTENT"] = "embedContent";
-    Task["BATCH_EMBED_CONTENTS"] = "batchEmbedContents";
-})(Task || (Task = {}));
-class RequestUrl {
-    constructor(model, task, apiKey, stream, requestOptions) {
-        this.model = model;
-        this.task = task;
-        this.apiKey = apiKey;
-        this.stream = stream;
-        this.requestOptions = requestOptions;
-    }
-    toString() {
-        var _a, _b;
-        const apiVersion = ((_a = this.requestOptions) === null || _a === void 0 ? void 0 : _a.apiVersion) || DEFAULT_API_VERSION;
-        const baseUrl = ((_b = this.requestOptions) === null || _b === void 0 ? void 0 : _b.baseUrl) || DEFAULT_BASE_URL;
-        let url = `${baseUrl}/${apiVersion}/${this.model}:${this.task}`;
-        if (this.stream) {
-            url += "?alt=sse";
-        }
-        return url;
-    }
-}
-/**
- * Simple, but may become more complex if we add more versions to log.
- */
-function getClientHeaders(requestOptions) {
-    const clientHeaders = [];
-    if (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.apiClient) {
-        clientHeaders.push(requestOptions.apiClient);
-    }
-    clientHeaders.push(`${PACKAGE_LOG_HEADER}/${PACKAGE_VERSION}`);
-    return clientHeaders.join(" ");
-}
-async function getHeaders(url) {
-    var _a;
-    const headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("x-goog-api-client", getClientHeaders(url.requestOptions));
-    headers.append("x-goog-api-key", url.apiKey);
-    let customHeaders = (_a = url.requestOptions) === null || _a === void 0 ? void 0 : _a.customHeaders;
-    if (customHeaders) {
-        if (!(customHeaders instanceof Headers)) {
-            try {
-                customHeaders = new Headers(customHeaders);
-            }
-            catch (e) {
-                throw new GoogleGenerativeAIRequestInputError(`unable to convert customHeaders value ${JSON.stringify(customHeaders)} to Headers: ${e.message}`);
-            }
-        }
-        for (const [headerName, headerValue] of customHeaders.entries()) {
-            if (headerName === "x-goog-api-key") {
-                throw new GoogleGenerativeAIRequestInputError(`Cannot set reserved header name ${headerName}`);
-            }
-            else if (headerName === "x-goog-api-client") {
-                throw new GoogleGenerativeAIRequestInputError(`Header name ${headerName} can only be set using the apiClient field`);
-            }
-            headers.append(headerName, headerValue);
-        }
-    }
-    return headers;
-}
-async function constructModelRequest(model, task, apiKey, stream, body, requestOptions) {
-    const url = new RequestUrl(model, task, apiKey, stream, requestOptions);
-    return {
-        url: url.toString(),
-        fetchOptions: Object.assign(Object.assign({}, buildFetchOptions(requestOptions)), { method: "POST", headers: await getHeaders(url), body }),
-    };
-}
-async function makeModelRequest(model, task, apiKey, stream, body, requestOptions, 
-// Allows this to be stubbed for tests
-fetchFn = fetch) {
-    const { url, fetchOptions } = await constructModelRequest(model, task, apiKey, stream, body, requestOptions);
-    return makeRequest(url, fetchOptions, fetchFn);
-}
-async function makeRequest(url, fetchOptions, fetchFn = fetch) {
-    let response;
-    try {
-        response = await fetchFn(url, fetchOptions);
-    }
-    catch (e) {
-        handleResponseError(e, url);
-    }
-    if (!response.ok) {
-        await handleResponseNotOk(response, url);
-    }
-    return response;
-}
-function handleResponseError(e, url) {
-    let err = e;
-    if (!(e instanceof GoogleGenerativeAIFetchError ||
-        e instanceof GoogleGenerativeAIRequestInputError)) {
-        err = new GoogleGenerativeAIError(`Error fetching from ${url.toString()}: ${e.message}`);
-        err.stack = e.stack;
-    }
-    throw err;
-}
-async function handleResponseNotOk(response, url) {
-    let message = "";
-    let errorDetails;
-    try {
-        const json = await response.json();
-        message = json.error.message;
-        if (json.error.details) {
-            message += ` ${JSON.stringify(json.error.details)}`;
-            errorDetails = json.error.details;
-        }
-    }
-    catch (e) {
-        // ignored
-    }
-    throw new GoogleGenerativeAIFetchError(`Error fetching from ${url.toString()}: [${response.status} ${response.statusText}] ${message}`, response.status, response.statusText, errorDetails);
-}
-/**
- * Generates the request options to be passed to the fetch API.
- * @param requestOptions - The user-defined request options.
- * @returns The generated request options.
- */
-function buildFetchOptions(requestOptions) {
-    const fetchOptions = {};
-    if ((requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeout) >= 0) {
-        const abortController = new AbortController();
-        const signal = abortController.signal;
-        setTimeout(() => abortController.abort(), requestOptions.timeout);
-        fetchOptions.signal = signal;
-    }
-    return fetchOptions;
-}
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Adds convenience helper methods to a response object, including stream
- * chunks (as long as each chunk is a complete GenerateContentResponse JSON).
- */
-function addHelpers(response) {
-    response.text = () => {
-        if (response.candidates && response.candidates.length > 0) {
-            if (response.candidates.length > 1) {
-                console.warn(`This response had ${response.candidates.length} ` +
-                    `candidates. Returning text from the first candidate only. ` +
-                    `Access response.candidates directly to use the other candidates.`);
-            }
-            if (hadBadFinishReason(response.candidates[0])) {
-                throw new GoogleGenerativeAIResponseError(`${formatBlockErrorMessage(response)}`, response);
-            }
-            return getText(response);
-        }
-        else if (response.promptFeedback) {
-            throw new GoogleGenerativeAIResponseError(`Text not available. ${formatBlockErrorMessage(response)}`, response);
-        }
-        return "";
-    };
-    /**
-     * TODO: remove at next major version
-     */
-    response.functionCall = () => {
-        if (response.candidates && response.candidates.length > 0) {
-            if (response.candidates.length > 1) {
-                console.warn(`This response had ${response.candidates.length} ` +
-                    `candidates. Returning function calls from the first candidate only. ` +
-                    `Access response.candidates directly to use the other candidates.`);
-            }
-            if (hadBadFinishReason(response.candidates[0])) {
-                throw new GoogleGenerativeAIResponseError(`${formatBlockErrorMessage(response)}`, response);
-            }
-            console.warn(`response.functionCall() is deprecated. ` +
-                `Use response.functionCalls() instead.`);
-            return getFunctionCalls(response)[0];
-        }
-        else if (response.promptFeedback) {
-            throw new GoogleGenerativeAIResponseError(`Function call not available. ${formatBlockErrorMessage(response)}`, response);
-        }
-        return undefined;
-    };
-    response.functionCalls = () => {
-        if (response.candidates && response.candidates.length > 0) {
-            if (response.candidates.length > 1) {
-                console.warn(`This response had ${response.candidates.length} ` +
-                    `candidates. Returning function calls from the first candidate only. ` +
-                    `Access response.candidates directly to use the other candidates.`);
-            }
-            if (hadBadFinishReason(response.candidates[0])) {
-                throw new GoogleGenerativeAIResponseError(`${formatBlockErrorMessage(response)}`, response);
-            }
-            return getFunctionCalls(response);
-        }
-        else if (response.promptFeedback) {
-            throw new GoogleGenerativeAIResponseError(`Function call not available. ${formatBlockErrorMessage(response)}`, response);
-        }
-        return undefined;
-    };
-    return response;
-}
-/**
- * Returns all text found in all parts of first candidate.
- */
-function getText(response) {
-    var _a, _b, _c, _d;
-    const textStrings = [];
-    if ((_b = (_a = response.candidates) === null || _a === void 0 ? void 0 : _a[0].content) === null || _b === void 0 ? void 0 : _b.parts) {
-        for (const part of (_d = (_c = response.candidates) === null || _c === void 0 ? void 0 : _c[0].content) === null || _d === void 0 ? void 0 : _d.parts) {
-            if (part.text) {
-                textStrings.push(part.text);
-            }
-        }
-    }
-    if (textStrings.length > 0) {
-        return textStrings.join("");
-    }
-    else {
-        return "";
-    }
-}
-/**
- * Returns functionCall of first candidate.
- */
-function getFunctionCalls(response) {
-    var _a, _b, _c, _d;
-    const functionCalls = [];
-    if ((_b = (_a = response.candidates) === null || _a === void 0 ? void 0 : _a[0].content) === null || _b === void 0 ? void 0 : _b.parts) {
-        for (const part of (_d = (_c = response.candidates) === null || _c === void 0 ? void 0 : _c[0].content) === null || _d === void 0 ? void 0 : _d.parts) {
-            if (part.functionCall) {
-                functionCalls.push(part.functionCall);
-            }
-        }
-    }
-    if (functionCalls.length > 0) {
-        return functionCalls;
-    }
-    else {
-        return undefined;
-    }
-}
-const badFinishReasons = [exports.FinishReason.RECITATION, exports.FinishReason.SAFETY];
-function hadBadFinishReason(candidate) {
-    return (!!candidate.finishReason &&
-        badFinishReasons.includes(candidate.finishReason));
-}
-function formatBlockErrorMessage(response) {
-    var _a, _b, _c;
-    let message = "";
-    if ((!response.candidates || response.candidates.length === 0) &&
-        response.promptFeedback) {
-        message += "Response was blocked";
-        if ((_a = response.promptFeedback) === null || _a === void 0 ? void 0 : _a.blockReason) {
-            message += ` due to ${response.promptFeedback.blockReason}`;
-        }
-        if ((_b = response.promptFeedback) === null || _b === void 0 ? void 0 : _b.blockReasonMessage) {
-            message += `: ${response.promptFeedback.blockReasonMessage}`;
-        }
-    }
-    else if ((_c = response.candidates) === null || _c === void 0 ? void 0 : _c[0]) {
-        const firstCandidate = response.candidates[0];
-        if (hadBadFinishReason(firstCandidate)) {
-            message += `Candidate was blocked due to ${firstCandidate.finishReason}`;
-            if (firstCandidate.finishMessage) {
-                message += `: ${firstCandidate.finishMessage}`;
-            }
-        }
-    }
-    return message;
-}
-
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-/* global Reflect, Promise, SuppressedError, Symbol */
-
-
-function __await(v) {
-    return this instanceof __await ? (this.v = v, this) : new __await(v);
-}
-
-function __asyncGenerator(thisArg, _arguments, generator) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var g = generator.apply(thisArg, _arguments || []), i, q = [];
-    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
-    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
-    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
-    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
-    function fulfill(value) { resume("next", value); }
-    function reject(value) { resume("throw", value); }
-    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
-}
-
-typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
-    var e = new Error(message);
-    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-const responseLineRE = /^data\: (.*)(?:\n\n|\r\r|\r\n\r\n)/;
-/**
- * Process a response.body stream from the backend and return an
- * iterator that provides one complete GenerateContentResponse at a time
- * and a promise that resolves with a single aggregated
- * GenerateContentResponse.
- *
- * @param response - Response from a fetch call
- */
-function processStream(response) {
-    const inputStream = response.body.pipeThrough(new TextDecoderStream("utf8", { fatal: true }));
-    const responseStream = getResponseStream(inputStream);
-    const [stream1, stream2] = responseStream.tee();
-    return {
-        stream: generateResponseSequence(stream1),
-        response: getResponsePromise(stream2),
-    };
-}
-async function getResponsePromise(stream) {
-    const allResponses = [];
-    const reader = stream.getReader();
-    while (true) {
-        const { done, value } = await reader.read();
-        if (done) {
-            return addHelpers(aggregateResponses(allResponses));
-        }
-        allResponses.push(value);
-    }
-}
-function generateResponseSequence(stream) {
-    return __asyncGenerator(this, arguments, function* generateResponseSequence_1() {
-        const reader = stream.getReader();
-        while (true) {
-            const { value, done } = yield __await(reader.read());
-            if (done) {
-                break;
-            }
-            yield yield __await(addHelpers(value));
-        }
-    });
-}
-/**
- * Reads a raw stream from the fetch response and join incomplete
- * chunks, returning a new stream that provides a single complete
- * GenerateContentResponse in each iteration.
- */
-function getResponseStream(inputStream) {
-    const reader = inputStream.getReader();
-    const stream = new ReadableStream({
-        start(controller) {
-            let currentText = "";
-            return pump();
-            function pump() {
-                return reader.read().then(({ value, done }) => {
-                    if (done) {
-                        if (currentText.trim()) {
-                            controller.error(new GoogleGenerativeAIError("Failed to parse stream"));
-                            return;
-                        }
-                        controller.close();
-                        return;
-                    }
-                    currentText += value;
-                    let match = currentText.match(responseLineRE);
-                    let parsedResponse;
-                    while (match) {
-                        try {
-                            parsedResponse = JSON.parse(match[1]);
-                        }
-                        catch (e) {
-                            controller.error(new GoogleGenerativeAIError(`Error parsing JSON response: "${match[1]}"`));
-                            return;
-                        }
-                        controller.enqueue(parsedResponse);
-                        currentText = currentText.substring(match[0].length);
-                        match = currentText.match(responseLineRE);
-                    }
-                    return pump();
-                });
-            }
-        },
-    });
-    return stream;
-}
-/**
- * Aggregates an array of `GenerateContentResponse`s into a single
- * GenerateContentResponse.
- */
-function aggregateResponses(responses) {
-    const lastResponse = responses[responses.length - 1];
-    const aggregatedResponse = {
-        promptFeedback: lastResponse === null || lastResponse === void 0 ? void 0 : lastResponse.promptFeedback,
-    };
-    for (const response of responses) {
-        if (response.candidates) {
-            for (const candidate of response.candidates) {
-                const i = candidate.index;
-                if (!aggregatedResponse.candidates) {
-                    aggregatedResponse.candidates = [];
-                }
-                if (!aggregatedResponse.candidates[i]) {
-                    aggregatedResponse.candidates[i] = {
-                        index: candidate.index,
-                    };
-                }
-                // Keep overwriting, the last one will be final
-                aggregatedResponse.candidates[i].citationMetadata =
-                    candidate.citationMetadata;
-                aggregatedResponse.candidates[i].finishReason = candidate.finishReason;
-                aggregatedResponse.candidates[i].finishMessage =
-                    candidate.finishMessage;
-                aggregatedResponse.candidates[i].safetyRatings =
-                    candidate.safetyRatings;
-                /**
-                 * Candidates should always have content and parts, but this handles
-                 * possible malformed responses.
-                 */
-                if (candidate.content && candidate.content.parts) {
-                    if (!aggregatedResponse.candidates[i].content) {
-                        aggregatedResponse.candidates[i].content = {
-                            role: candidate.content.role || "user",
-                            parts: [],
-                        };
-                    }
-                    const newPart = {};
-                    for (const part of candidate.content.parts) {
-                        if (part.text) {
-                            newPart.text = part.text;
-                        }
-                        if (part.functionCall) {
-                            newPart.functionCall = part.functionCall;
-                        }
-                        if (Object.keys(newPart).length === 0) {
-                            newPart.text = "";
-                        }
-                        aggregatedResponse.candidates[i].content.parts.push(newPart);
-                    }
-                }
-            }
-        }
-        if (response.usageMetadata) {
-            aggregatedResponse.usageMetadata = response.usageMetadata;
-        }
-    }
-    return aggregatedResponse;
-}
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function generateContentStream(apiKey, model, params, requestOptions) {
-    const response = await makeModelRequest(model, Task.STREAM_GENERATE_CONTENT, apiKey, 
-    /* stream */ true, JSON.stringify(params), requestOptions);
-    return processStream(response);
-}
-async function generateContent(apiKey, model, params, requestOptions) {
-    const response = await makeModelRequest(model, Task.GENERATE_CONTENT, apiKey, 
-    /* stream */ false, JSON.stringify(params), requestOptions);
-    const responseJson = await response.json();
-    const enhancedResponse = addHelpers(responseJson);
-    return {
-        response: enhancedResponse,
-    };
-}
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-function formatSystemInstruction(input) {
-    // null or undefined
-    if (input == null) {
-        return undefined;
-    }
-    else if (typeof input === "string") {
-        return { role: "system", parts: [{ text: input }] };
-    }
-    else if (input.text) {
-        return { role: "system", parts: [input] };
-    }
-    else if (input.parts) {
-        if (!input.role) {
-            return { role: "system", parts: input.parts };
-        }
-        else {
-            return input;
-        }
-    }
-}
-function formatNewContent(request) {
-    let newParts = [];
-    if (typeof request === "string") {
-        newParts = [{ text: request }];
-    }
-    else {
-        for (const partOrString of request) {
-            if (typeof partOrString === "string") {
-                newParts.push({ text: partOrString });
-            }
-            else {
-                newParts.push(partOrString);
-            }
-        }
-    }
-    return assignRoleToPartsAndValidateSendMessageRequest(newParts);
-}
-/**
- * When multiple Part types (i.e. FunctionResponsePart and TextPart) are
- * passed in a single Part array, we may need to assign different roles to each
- * part. Currently only FunctionResponsePart requires a role other than 'user'.
- * @private
- * @param parts Array of parts to pass to the model
- * @returns Array of content items
- */
-function assignRoleToPartsAndValidateSendMessageRequest(parts) {
-    const userContent = { role: "user", parts: [] };
-    const functionContent = { role: "function", parts: [] };
-    let hasUserContent = false;
-    let hasFunctionContent = false;
-    for (const part of parts) {
-        if ("functionResponse" in part) {
-            functionContent.parts.push(part);
-            hasFunctionContent = true;
-        }
-        else {
-            userContent.parts.push(part);
-            hasUserContent = true;
-        }
-    }
-    if (hasUserContent && hasFunctionContent) {
-        throw new GoogleGenerativeAIError("Within a single message, FunctionResponse cannot be mixed with other type of part in the request for sending chat message.");
-    }
-    if (!hasUserContent && !hasFunctionContent) {
-        throw new GoogleGenerativeAIError("No content is provided for sending chat message.");
-    }
-    if (hasUserContent) {
-        return userContent;
-    }
-    return functionContent;
-}
-function formatCountTokensInput(params, model) {
-    let formattedRequest = {};
-    const containsGenerateContentRequest = params.generateContentRequest != null;
-    if (params.contents) {
-        if (containsGenerateContentRequest) {
-            throw new GoogleGenerativeAIRequestInputError("CountTokensRequest must have one of contents or generateContentRequest, not both.");
-        }
-        formattedRequest = Object.assign({}, params);
-    }
-    else if (containsGenerateContentRequest) {
-        formattedRequest = Object.assign({}, params);
-        formattedRequest.generateContentRequest.model = model;
-    }
-    else {
-        // Array or string
-        const content = formatNewContent(params);
-        formattedRequest.contents = [content];
-    }
-    return formattedRequest;
-}
-function formatGenerateContentInput(params) {
-    let formattedRequest;
-    if (params.contents) {
-        formattedRequest = params;
-    }
-    else {
-        // Array or string
-        const content = formatNewContent(params);
-        formattedRequest = { contents: [content] };
-    }
-    if (params.systemInstruction) {
-        formattedRequest.systemInstruction = formatSystemInstruction(params.systemInstruction);
-    }
-    return formattedRequest;
-}
-function formatEmbedContentInput(params) {
-    if (typeof params === "string" || Array.isArray(params)) {
-        const content = formatNewContent(params);
-        return { content };
-    }
-    return params;
-}
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-// https://ai.google.dev/api/rest/v1beta/Content#part
-const VALID_PART_FIELDS = [
-    "text",
-    "inlineData",
-    "functionCall",
-    "functionResponse",
-];
-const VALID_PARTS_PER_ROLE = {
-    user: ["text", "inlineData"],
-    function: ["functionResponse"],
-    model: ["text", "functionCall"],
-    // System instructions shouldn't be in history anyway.
-    system: ["text"],
-};
-function validateChatHistory(history) {
-    let prevContent = false;
-    for (const currContent of history) {
-        const { role, parts } = currContent;
-        if (!prevContent && role !== "user") {
-            throw new GoogleGenerativeAIError(`First content should be with role 'user', got ${role}`);
-        }
-        if (!POSSIBLE_ROLES.includes(role)) {
-            throw new GoogleGenerativeAIError(`Each item should include role field. Got ${role} but valid roles are: ${JSON.stringify(POSSIBLE_ROLES)}`);
-        }
-        if (!Array.isArray(parts)) {
-            throw new GoogleGenerativeAIError("Content should have 'parts' property with an array of Parts");
-        }
-        if (parts.length === 0) {
-            throw new GoogleGenerativeAIError("Each Content should have at least one part");
-        }
-        const countFields = {
-            text: 0,
-            inlineData: 0,
-            functionCall: 0,
-            functionResponse: 0,
-            fileData: 0,
-        };
-        for (const part of parts) {
-            for (const key of VALID_PART_FIELDS) {
-                if (key in part) {
-                    countFields[key] += 1;
-                }
-            }
-        }
-        const validParts = VALID_PARTS_PER_ROLE[role];
-        for (const key of VALID_PART_FIELDS) {
-            if (!validParts.includes(key) && countFields[key] > 0) {
-                throw new GoogleGenerativeAIError(`Content with role '${role}' can't contain '${key}' part`);
-            }
-        }
-        prevContent = true;
-    }
-}
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Do not log a message for this error.
- */
-const SILENT_ERROR = "SILENT_ERROR";
-/**
- * ChatSession class that enables sending chat messages and stores
- * history of sent and received messages so far.
- *
- * @public
- */
-class ChatSession {
-    constructor(apiKey, model, params, requestOptions) {
-        this.model = model;
-        this.params = params;
-        this.requestOptions = requestOptions;
-        this._history = [];
-        this._sendPromise = Promise.resolve();
-        this._apiKey = apiKey;
-        if (params === null || params === void 0 ? void 0 : params.history) {
-            validateChatHistory(params.history);
-            this._history = params.history;
-        }
-    }
-    /**
-     * Gets the chat history so far. Blocked prompts are not added to history.
-     * Blocked candidates are not added to history, nor are the prompts that
-     * generated them.
-     */
-    async getHistory() {
-        await this._sendPromise;
-        return this._history;
-    }
-    /**
-     * Sends a chat message and receives a non-streaming
-     * {@link GenerateContentResult}
-     */
-    async sendMessage(request) {
-        var _a, _b, _c, _d, _e, _f;
-        await this._sendPromise;
-        const newContent = formatNewContent(request);
-        const generateContentRequest = {
-            safetySettings: (_a = this.params) === null || _a === void 0 ? void 0 : _a.safetySettings,
-            generationConfig: (_b = this.params) === null || _b === void 0 ? void 0 : _b.generationConfig,
-            tools: (_c = this.params) === null || _c === void 0 ? void 0 : _c.tools,
-            toolConfig: (_d = this.params) === null || _d === void 0 ? void 0 : _d.toolConfig,
-            systemInstruction: (_e = this.params) === null || _e === void 0 ? void 0 : _e.systemInstruction,
-            cachedContent: (_f = this.params) === null || _f === void 0 ? void 0 : _f.cachedContent,
-            contents: [...this._history, newContent],
-        };
-        let finalResult;
-        // Add onto the chain.
-        this._sendPromise = this._sendPromise
-            .then(() => generateContent(this._apiKey, this.model, generateContentRequest, this.requestOptions))
-            .then((result) => {
-            var _a;
-            if (result.response.candidates &&
-                result.response.candidates.length > 0) {
-                this._history.push(newContent);
-                const responseContent = Object.assign({ parts: [], 
-                    // Response seems to come back without a role set.
-                    role: "model" }, (_a = result.response.candidates) === null || _a === void 0 ? void 0 : _a[0].content);
-                this._history.push(responseContent);
-            }
-            else {
-                const blockErrorMessage = formatBlockErrorMessage(result.response);
-                if (blockErrorMessage) {
-                    console.warn(`sendMessage() was unsuccessful. ${blockErrorMessage}. Inspect response object for details.`);
-                }
-            }
-            finalResult = result;
-        });
-        await this._sendPromise;
-        return finalResult;
-    }
-    /**
-     * Sends a chat message and receives the response as a
-     * {@link GenerateContentStreamResult} containing an iterable stream
-     * and a response promise.
-     */
-    async sendMessageStream(request) {
-        var _a, _b, _c, _d, _e, _f;
-        await this._sendPromise;
-        const newContent = formatNewContent(request);
-        const generateContentRequest = {
-            safetySettings: (_a = this.params) === null || _a === void 0 ? void 0 : _a.safetySettings,
-            generationConfig: (_b = this.params) === null || _b === void 0 ? void 0 : _b.generationConfig,
-            tools: (_c = this.params) === null || _c === void 0 ? void 0 : _c.tools,
-            toolConfig: (_d = this.params) === null || _d === void 0 ? void 0 : _d.toolConfig,
-            systemInstruction: (_e = this.params) === null || _e === void 0 ? void 0 : _e.systemInstruction,
-            cachedContent: (_f = this.params) === null || _f === void 0 ? void 0 : _f.cachedContent,
-            contents: [...this._history, newContent],
-        };
-        const streamPromise = generateContentStream(this._apiKey, this.model, generateContentRequest, this.requestOptions);
-        // Add onto the chain.
-        this._sendPromise = this._sendPromise
-            .then(() => streamPromise)
-            // This must be handled to avoid unhandled rejection, but jump
-            // to the final catch block with a label to not log this error.
-            .catch((_ignored) => {
-            throw new Error(SILENT_ERROR);
-        })
-            .then((streamResult) => streamResult.response)
-            .then((response) => {
-            if (response.candidates && response.candidates.length > 0) {
-                this._history.push(newContent);
-                const responseContent = Object.assign({}, response.candidates[0].content);
-                // Response seems to come back without a role set.
-                if (!responseContent.role) {
-                    responseContent.role = "model";
-                }
-                this._history.push(responseContent);
-            }
-            else {
-                const blockErrorMessage = formatBlockErrorMessage(response);
-                if (blockErrorMessage) {
-                    console.warn(`sendMessageStream() was unsuccessful. ${blockErrorMessage}. Inspect response object for details.`);
-                }
-            }
-        })
-            .catch((e) => {
-            // Errors in streamPromise are already catchable by the user as
-            // streamPromise is returned.
-            // Avoid duplicating the error message in logs.
-            if (e.message !== SILENT_ERROR) {
-                // Users do not have access to _sendPromise to catch errors
-                // downstream from streamPromise, so they should not throw.
-                console.error(e);
-            }
-        });
-        return streamPromise;
-    }
-}
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function countTokens(apiKey, model, params, requestOptions) {
-    const response = await makeModelRequest(model, Task.COUNT_TOKENS, apiKey, false, JSON.stringify(params), requestOptions);
-    return response.json();
-}
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-async function embedContent(apiKey, model, params, requestOptions) {
-    const response = await makeModelRequest(model, Task.EMBED_CONTENT, apiKey, false, JSON.stringify(params), requestOptions);
-    return response.json();
-}
-async function batchEmbedContents(apiKey, model, params, requestOptions) {
-    const requestsWithModel = params.requests.map((request) => {
-        return Object.assign(Object.assign({}, request), { model });
-    });
-    const response = await makeModelRequest(model, Task.BATCH_EMBED_CONTENTS, apiKey, false, JSON.stringify({ requests: requestsWithModel }), requestOptions);
-    return response.json();
-}
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Class for generative model APIs.
- * @public
- */
-class GenerativeModel {
-    constructor(apiKey, modelParams, requestOptions) {
-        this.apiKey = apiKey;
-        if (modelParams.model.includes("/")) {
-            // Models may be named "models/model-name" or "tunedModels/model-name"
-            this.model = modelParams.model;
-        }
-        else {
-            // If path is not included, assume it's a non-tuned model.
-            this.model = `models/${modelParams.model}`;
-        }
-        this.generationConfig = modelParams.generationConfig || {};
-        this.safetySettings = modelParams.safetySettings || [];
-        this.tools = modelParams.tools;
-        this.toolConfig = modelParams.toolConfig;
-        this.systemInstruction = formatSystemInstruction(modelParams.systemInstruction);
-        this.cachedContent = modelParams.cachedContent;
-        this.requestOptions = requestOptions || {};
-    }
-    /**
-     * Makes a single non-streaming call to the model
-     * and returns an object containing a single {@link GenerateContentResponse}.
-     */
-    async generateContent(request) {
-        var _a;
-        const formattedParams = formatGenerateContentInput(request);
-        return generateContent(this.apiKey, this.model, Object.assign({ generationConfig: this.generationConfig, safetySettings: this.safetySettings, tools: this.tools, toolConfig: this.toolConfig, systemInstruction: this.systemInstruction, cachedContent: (_a = this.cachedContent) === null || _a === void 0 ? void 0 : _a.name }, formattedParams), this.requestOptions);
-    }
-    /**
-     * Makes a single streaming call to the model
-     * and returns an object containing an iterable stream that iterates
-     * over all chunks in the streaming response as well as
-     * a promise that returns the final aggregated response.
-     */
-    async generateContentStream(request) {
-        var _a;
-        const formattedParams = formatGenerateContentInput(request);
-        return generateContentStream(this.apiKey, this.model, Object.assign({ generationConfig: this.generationConfig, safetySettings: this.safetySettings, tools: this.tools, toolConfig: this.toolConfig, systemInstruction: this.systemInstruction, cachedContent: (_a = this.cachedContent) === null || _a === void 0 ? void 0 : _a.name }, formattedParams), this.requestOptions);
-    }
-    /**
-     * Gets a new {@link ChatSession} instance which can be used for
-     * multi-turn chats.
-     */
-    startChat(startChatParams) {
-        var _a;
-        return new ChatSession(this.apiKey, this.model, Object.assign({ generationConfig: this.generationConfig, safetySettings: this.safetySettings, tools: this.tools, toolConfig: this.toolConfig, systemInstruction: this.systemInstruction, cachedContent: (_a = this.cachedContent) === null || _a === void 0 ? void 0 : _a.name }, startChatParams), this.requestOptions);
-    }
-    /**
-     * Counts the tokens in the provided request.
-     */
-    async countTokens(request) {
-        const formattedParams = formatCountTokensInput(request, this.model);
-        return countTokens(this.apiKey, this.model, formattedParams, this.requestOptions);
-    }
-    /**
-     * Embeds the provided content.
-     */
-    async embedContent(request) {
-        const formattedParams = formatEmbedContentInput(request);
-        return embedContent(this.apiKey, this.model, formattedParams, this.requestOptions);
-    }
-    /**
-     * Embeds an array of {@link EmbedContentRequest}s.
-     */
-    async batchEmbedContents(batchEmbedContentRequest) {
-        return batchEmbedContents(this.apiKey, this.model, batchEmbedContentRequest, this.requestOptions);
-    }
-}
-
-/**
- * @license
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/**
- * Top-level class for this SDK
- * @public
- */
-class GoogleGenerativeAI {
-    constructor(apiKey) {
-        this.apiKey = apiKey;
-    }
-    /**
-     * Gets a {@link GenerativeModel} instance for the provided model name.
-     */
-    getGenerativeModel(modelParams, requestOptions) {
-        if (!modelParams.model) {
-            throw new GoogleGenerativeAIError(`Must provide a model name. ` +
-                `Example: genai.getGenerativeModel({ model: 'my-model-name' })`);
-        }
-        return new GenerativeModel(this.apiKey, modelParams, requestOptions);
-    }
-    /**
-     * Creates a {@link GenerativeModel} instance from provided content cache.
-     */
-    getGenerativeModelFromCachedContent(cachedContent, requestOptions) {
-        if (!cachedContent.name) {
-            throw new GoogleGenerativeAIRequestInputError("Cached content must contain a `name` field.");
-        }
-        if (!cachedContent.model) {
-            throw new GoogleGenerativeAIRequestInputError("Cached content must contain a `model` field.");
-        }
-        const modelParamsFromCache = {
-            model: cachedContent.model,
-            tools: cachedContent.tools,
-            toolConfig: cachedContent.toolConfig,
-            systemInstruction: cachedContent.systemInstruction,
-            cachedContent,
-        };
-        return new GenerativeModel(this.apiKey, modelParamsFromCache, requestOptions);
-    }
-}
-
-exports.ChatSession = ChatSession;
-exports.GenerativeModel = GenerativeModel;
-exports.GoogleGenerativeAI = GoogleGenerativeAI;
-exports.GoogleGenerativeAIError = GoogleGenerativeAIError;
-exports.GoogleGenerativeAIFetchError = GoogleGenerativeAIFetchError;
-exports.GoogleGenerativeAIRequestInputError = GoogleGenerativeAIRequestInputError;
-exports.GoogleGenerativeAIResponseError = GoogleGenerativeAIResponseError;
-exports.POSSIBLE_ROLES = POSSIBLE_ROLES;
-//# sourceMappingURL=index.js.map
-
-
-/***/ }),
-
 /***/ "./node_modules/base64-js/index.js":
 /*!*****************************************!*\
   !*** ./node_modules/base64-js/index.js ***!
@@ -46606,6 +45295,384 @@ exports["default"] = StyleToObject;
 
 /***/ }),
 
+/***/ "./src/components/App/Notes.tsx":
+/*!**************************************!*\
+  !*** ./src/components/App/Notes.tsx ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+const TextEditor = () => {
+    const [content, setContent] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+    const editorRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+        // Load content from Chrome storage
+        chrome.storage.sync.get(['noteContent'], (result) => {
+            if (result.noteContent) {
+                setContent(result.noteContent);
+            }
+        });
+    }, []);
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+        // Save content to Chrome storage
+        chrome.storage.sync.set({ noteContent: content });
+    }, [content]);
+    const handleInput = (e) => {
+        setContent(e.target.innerHTML);
+    };
+    const handleKeyDown = (e) => {
+        // Disable default shortcuts
+        if (e.ctrlKey || e.metaKey) {
+            switch (e.key.toLowerCase()) {
+                case 'b': // Ctrl+B or Cmd+B
+                case 'i': // Ctrl+I or Cmd+I
+                case 'u': // Ctrl+U or Cmd+U
+                case 's': // Ctrl+S or Cmd+S
+                case 'p': // Ctrl+P or Cmd+P
+                case 'r': // Ctrl+R or Cmd+R (refresh)
+                case 'f': // Ctrl+F or Cmd+F (find)
+                case 'z': // Ctrl+Z or Cmd+Z (undo)
+                case 'y': // Ctrl+Y or Cmd+Y (redo)
+                    e.preventDefault();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    const execCommand = (command, value = null) => {
+        document.execCommand(command, false, value);
+    };
+    const handleImagePaste = (e) => {
+        const items = e.clipboardData.items;
+        for (let item of items) {
+            if (item.type.indexOf('image') !== -1) {
+                const blob = item.getAsFile();
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    execCommand('insertImage', event.target.result);
+                };
+                reader.readAsDataURL(blob);
+            }
+        }
+    };
+    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: { padding: '20px', width: '600px', margin: 'auto' } },
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: { marginBottom: '10px' } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => execCommand('bold') },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, "B")),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => execCommand('italic') },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", null, "I")),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => execCommand('underline') },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("u", null, "U")),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => {
+                    const url = prompt('Enter the URL');
+                    execCommand('createLink', url);
+                } }, "Link")),
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { ref: editorRef, contentEditable: true, suppressContentEditableWarning: true, onInput: handleInput, onKeyDown: handleKeyDown, onPaste: handleImagePaste, style: {
+                minHeight: '200px',
+                padding: '10px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                backgroundColor: '#fff',
+                color: '#333',
+                overflowY: 'auto',
+                outline: 'none'
+            } }, content)));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TextEditor);
+
+
+/***/ }),
+
+/***/ "./src/components/App/QuizComponent.tsx":
+/*!**********************************************!*\
+  !*** ./src/components/App/QuizComponent.tsx ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_services_api_quiz_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/services/api/quiz.service */ "./src/utils/services/api/quiz.service.ts");
+/* harmony import */ var _utils_services_api_quiz_progress_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/services/api/quiz_progress.service */ "./src/utils/services/api/quiz_progress.service.ts");
+"use client";
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+
+
+
+const QuizComponent = ({ url }) => {
+    var _a;
+    const [quiz, setQuiz] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+    const [responses, setResponses] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+    const [timer, setTimer] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(600); // 10 minutes
+    const [showModal, setShowModal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+    const [score, setScore] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+    const [currentQuestion, setCurrentQuestion] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+    const [wrongAnswer, setWrongAnswer] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+    // Utility function to shuffle an array
+    const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    };
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+        if (!url)
+            return;
+        const fetchQuiz = () => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                let res = yield _utils_services_api_quiz_service__WEBPACK_IMPORTED_MODULE_1__._quizService.getSingleQuiz({ url });
+                if (res.data) {
+                    const shuffledQuestions = shuffleArray(res.data.questions);
+                    setTimer(shuffledQuestions.length * 30); // 30 seconds for each question
+                    setQuiz(Object.assign(Object.assign({}, res.data), { questions: shuffledQuestions }));
+                    setCurrentQuestion(Object.assign(Object.assign({}, shuffledQuestions[0]), { options: shuffleArray(shuffledQuestions[0].options) }));
+                }
+            }
+            catch (error) {
+                console.error("Error fetching or creating quiz:", error);
+            }
+        });
+        fetchQuiz();
+    }, [url]);
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+        if (timer === 0) {
+            submitHandler(); // Auto-submit when timer runs out
+        }
+        const interval = setInterval(() => {
+            setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [timer]);
+    const submitHandler = () => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const res = yield _utils_services_api_quiz_progress_service__WEBPACK_IMPORTED_MODULE_2__._progressService.createProgress({
+                quizId: quiz._id,
+                responses,
+                score,
+            });
+            if (res.statusCode === 200) {
+                setShowModal(true);
+            }
+        }
+        catch (error) {
+            console.error("Error submitting quiz progress:", error);
+        }
+    });
+    const handleAnswer = (questionId, givenAnswer, isCorrect, correctAnswer, question) => {
+        setResponses((prev) => [...prev, { questionId, givenAnswer, isCorrect }]);
+        if (isCorrect)
+            setScore((prev) => prev + 1);
+        else {
+            setWrongAnswer((prev) => [
+                ...prev,
+                { question, givenAnswer, correctAnswer },
+            ]);
+        }
+        if (currentQuestionIndex < quiz.questions.length - 1) {
+            setCurrentQuestionIndex((prev) => prev + 1);
+            setCurrentQuestion(Object.assign(Object.assign({}, quiz.questions[currentQuestionIndex + 1]), { options: shuffleArray(quiz.questions[currentQuestionIndex + 1].options) }));
+        }
+        else {
+            submitHandler();
+        }
+    };
+    if (!quiz)
+        return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
+    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: containerStyle },
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: headerStyle },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: timeStyle },
+                "Time Left: ",
+                Math.floor(timer / 60),
+                ":",
+                String(timer % 60).padStart(2, "0")),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { style: submitButtonStyle, onClick: submitHandler }, "Submit Quiz")),
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { style: descriptionStyle }, quiz === null || quiz === void 0 ? void 0 : quiz.description),
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: questionContainerStyle },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: questionStyle },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", null,
+                    currentQuestionIndex + 1,
+                    ". ", currentQuestion === null || currentQuestion === void 0 ? void 0 :
+                    currentQuestion.question))),
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: optionsContainerStyle }, (_a = currentQuestion === null || currentQuestion === void 0 ? void 0 : currentQuestion.options) === null || _a === void 0 ? void 0 : _a.map((option, index) => (index < 4 && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { key: index, onClick: () => handleAnswer(currentQuestion === null || currentQuestion === void 0 ? void 0 : currentQuestion._id, option, option === (currentQuestion === null || currentQuestion === void 0 ? void 0 : currentQuestion.correctAnswer), currentQuestion.correctAnswer, currentQuestion.question), style: optionButtonStyle },
+            String.fromCharCode(65 + index),
+            ". ",
+            option))))),
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", { style: scoreStyle },
+            score,
+            " / ",
+            quiz.questions.length),
+        showModal && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: modalOverlayStyle },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: modalStyle },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { style: modalHeaderTextStyle },
+                    "Quiz Submitted Successfully. Your Score: ",
+                    score,
+                    " / ",
+                    quiz.questions.length),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: wrongAnswersContainerStyle }, wrongAnswer.map((item, index) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { key: index, style: wrongAnswerStyle },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { style: wrongAnswerQuestionStyle },
+                        index + 1,
+                        ". ",
+                        item.question),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { style: givenAnswerStyle },
+                        "Given Answer: ",
+                        item.givenAnswer),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { style: correctAnswerStyle },
+                        "Correct Answer: ",
+                        item.correctAnswer))))),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { style: closeButtonStyle, onClick: () => setShowModal(false) }, "Close"))))));
+};
+const containerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    padding: "1rem 2rem",
+    borderRadius: "10px",
+    backgroundColor: "#4456FF",
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+    color: "white",
+};
+const headerStyle = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "1rem",
+};
+const timeStyle = {
+    fontSize: "1.25rem",
+    fontWeight: "bold",
+    color: "red",
+};
+const submitButtonStyle = {
+    padding: "0.5rem 1rem",
+    borderRadius: "5px",
+    backgroundColor: "white",
+    color: "black",
+    fontWeight: "bold",
+    cursor: "pointer",
+    transition: "background-color 0.3s",
+};
+const descriptionStyle = {
+    fontSize: "1.25rem",
+    marginBottom: "1rem",
+};
+const questionContainerStyle = {
+    marginBottom: "1rem",
+};
+const questionStyle = {
+    padding: "1rem",
+    borderRadius: "5px",
+    backgroundColor: "white",
+    color: "black",
+    fontSize: "1.25rem",
+    fontWeight: "bold",
+};
+const optionsContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5rem",
+};
+const optionButtonStyle = {
+    padding: "0.75rem 1.5rem",
+    borderRadius: "5px",
+    backgroundColor: "#868CFF",
+    color: "white",
+    fontWeight: "bold",
+    cursor: "pointer",
+    transition: "background-color 0.3s",
+};
+const scoreStyle = {
+    fontSize: "2rem",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: "1rem",
+};
+const modalOverlayStyle = {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+};
+const modalStyle = {
+    backgroundColor: "white",
+    padding: "2rem",
+    borderRadius: "10px",
+    color: "#4456FF",
+    textAlign: "center",
+};
+const modalHeaderTextStyle = {
+    fontSize: "2rem",
+    fontWeight: "bold",
+};
+const wrongAnswersContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
+    marginTop: "1rem",
+};
+const wrongAnswerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5rem",
+};
+const wrongAnswerQuestionStyle = {
+    fontSize: "1.25rem",
+    fontWeight: "bold",
+    color: "#FF6347",
+};
+const givenAnswerStyle = {
+    fontSize: "1.25rem",
+    fontWeight: "bold",
+    color: "#FF0000",
+};
+const correctAnswerStyle = {
+    fontSize: "1.25rem",
+    fontWeight: "bold",
+    color: "#00FF00",
+};
+const closeButtonStyle = {
+    marginTop: "1rem",
+    padding: "0.5rem 1rem",
+    borderRadius: "5px",
+    backgroundColor: "#4456FF",
+    color: "white",
+    fontWeight: "bold",
+    cursor: "pointer",
+    transition: "background-color 0.3s",
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (QuizComponent);
+
+
+/***/ }),
+
 /***/ "./src/components/App/ShowSummary.tsx":
 /*!********************************************!*\
   !*** ./src/components/App/ShowSummary.tsx ***!
@@ -46627,6 +45694,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_compressfunc__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/compressfunc */ "./src/utils/compressfunc.ts");
 /* harmony import */ var _utils_getYTSubtitleFromPage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/getYTSubtitleFromPage */ "./src/utils/getYTSubtitleFromPage.ts");
 /* harmony import */ var _useLocations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./useLocations */ "./src/components/App/useLocations.ts");
+// import React, { useEffect, useState } from "react";
+// import { _bookmarkAccountService } from "../../utils/services";
+// import pako from "pako";
+// import { Buffer } from "buffer";
+// import ReactMarkdown from "react-markdown";
+// import { LOGO_BASE64 } from "../../utils/constant";
+// import { compressString } from "../../utils/compressfunc";
+// import { getYTSubtitleFromPage } from "../../utils/getYTSubtitleFromPage";
+// import useLocation from "./useLocations";
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -46636,6 +45712,225 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+// const ShowSummary = ({ title, videoId, videoDetails }) => {
+//   const currentUrl = useLocation();
+//   const decompressBufferString = (str: string) => {
+//     const bf = Buffer.from(str, "base64");
+//     const decompressedSummary = pako.inflate(bf, { to: "string" });
+//     return decompressedSummary;
+//   };
+//   const [loading, setLoading] = useState(true);
+//   const [isTyping, setIsTyping] = useState(true);
+//   const [fullResponse, setFullResponse] = useState("");
+//   const [typingIndex, setTypingIndex] = useState(0);
+//   const [response, setResponse] = useState("");
+//   const [savedBookmark, setSavedBookmark] = useState(false);
+//   //   check localstorage
+//   const checkLocalStorage = (videoId) => {
+//     const bookmark = localStorage.getItem(videoId);
+//     if (bookmark) {
+//       return true;
+//     }
+//     return false;
+//   };
+//   const add2LocalStorage = (videoId, summary) => {
+//     // only add 5 in sequence if more remove the first one
+//     const queue = JSON.parse(localStorage.getItem("summaryQueue")) || [];
+//     if (queue.length >= 5) {
+//       const videoId = queue.shift();
+//       localStorage.removeItem(videoId);
+//       //now video id is reoved from queue now save the new queue array in localstorage
+//       localStorage.setItem("summaryQueue", JSON.stringify(queue));
+//     } else {
+//       queue.push(videoId);
+//       localStorage.setItem("summaryQueue", JSON.stringify(queue));
+//       localStorage.setItem(videoId, JSON.stringify(summary));
+//     }
+//   };
+//   const fetchBookmark = async () => {
+//     try {
+//       setIsTyping(false);
+//       setLoading(true);
+//       const ytLink = window.location.href;
+//       const videoId = new URL(ytLink).searchParams.get("v");
+//       if (checkLocalStorage(videoId)) {
+//         const summary = JSON.parse(localStorage.getItem(videoId));
+//         const decompressed = summary;
+//         setFullResponse(decompressed); // Set the full response text
+//         setIsTyping(true); // Start typing effect
+//         setTypingIndex(0); // Reset typing index
+//         setResponse(""); // Clear current response
+//       } else {
+//         const { title, subtitles, description } = await getYTSubtitleFromPage(
+//           ytLink
+//         );
+//         const videoDetails = compressString(subtitles);
+//         const res = await _bookmarkAccountService.getSummaryByVideoId({
+//           title,
+//           videoId,
+//           videoDetails,
+//         });
+//         if (res.statusCode === 200) {
+//           // Save to localstorage
+//           const decompressed = decompressBufferString(res.data.summary);
+//           add2LocalStorage(videoId, decompressed);
+//           setFullResponse(decompressed); // Set the full response text
+//           setIsTyping(true); // Start typing effect
+//           setTypingIndex(0); // Reset typing index
+//           setResponse(""); // Clear current response
+//         } else {
+//           throw new Error(res.message);
+//         }
+//       }
+//     } catch (error) {
+//       console.error("Error fetching bookmark:", error);
+//     } finally {
+//       setIsTyping(true);
+//       setLoading(false);
+//     }
+//   };
+//   useEffect(() => {
+//     fetchBookmark();
+//   }, []);
+//   useEffect(() => {
+//     if (isTyping && typingIndex < fullResponse.length) {
+//       const timeout = setTimeout(() => {
+//         setResponse((prev) => prev + fullResponse.charAt(typingIndex));
+//         setTypingIndex((prev) => prev + 1);
+//       }, 20);
+//       return () => clearTimeout(timeout);
+//     } else {
+//       //   setIsTyping(false);
+//     }
+//     return () => {
+//       //   setIsTyping(false);
+//     };
+//   }, [isTyping, typingIndex, fullResponse]);
+//   const saveSummary = async () => {
+//     const res = await _bookmarkAccountService.createBookmark({
+//       title,
+//       videoId,
+//       videoDetails,
+//       url: `https://www.youtube.com/watch?v=${videoId}`,
+//     });
+//     if (res.statusCode === 200) {
+//       console.log("Summary saved successfully");
+//       setSavedBookmark(true);
+//     }
+//   };
+//   useEffect(() => {
+//     console.log("Running Useeffedt");
+//     let timeout;
+//     if (savedBookmark) {
+//       console.log("Saved bookmark:", savedBookmark);
+//       timeout = setTimeout(() => {
+//         setSavedBookmark(false);
+//       }, 2000);
+//     } else {
+//     }
+//     return () => clearTimeout(timeout);
+//   }, [savedBookmark]);
+//   const toggleTyping = () => {
+//     setIsTyping(!isTyping); // Toggle the isTyping state
+//   };
+//   return loading ? (
+//     <img
+//       // plus animation
+//       style={{
+//         width: "100px",
+//         height: "100px",
+//         backgroundColor: "#462FEB",
+//         borderRadius: "50%",
+//         animation: "pulse 2s infinite",
+//       }}
+//       src={LOGO_BASE64}
+//     />
+//   ) : (
+//     <div>
+//       <div
+//         style={{
+//           display: "flex",
+//           justifyContent: "end",
+//           alignItems: "center",
+//           marginTop: "-40px",
+//         }}
+//       >
+//         <button
+//           onClick={saveSummary}
+//           style={buttonStyle}
+//         >
+//           Save Summary
+//         </button>
+//         <button
+//           onClick={toggleTyping}
+//           style={{
+//             // backgroundColor: { isTyping } ? "#FF0000" : "#00FF00",
+//             color: "white",
+//             // padding: "10px",
+//             // borderRadius: "10px",
+//             border: "none",
+//             cursor: "pointer",
+//             marginLeft: "10px",
+//           }}
+//         >
+//           {isTyping ? (
+//             <svg viewBox="0 0 24 24" width="24" height="24" fill="FF0000">
+//               <path d="M6 6h12v12H6z"></path>
+//             </svg>
+//           ) : (
+//             <svg viewBox="0 0 24 24" width="24" height="24" fill="00FF00">
+//               <path d="M8 5v14l11-7z"></path>
+//             </svg>
+//           )}
+//         </button>
+//         <button
+//           onClick={fetchBookmark}
+//           style={{
+//             // backgroundColor: { isTyping } ? "#FF0000" : "#00FF00",
+//             color: "white",
+//             // padding: "10px",
+//             // borderRadius: "10px",
+//             border: "none",
+//             cursor: "pointer",
+//             marginLeft: "10px",
+//           }}
+//         >
+//           <svg viewBox="0 0 24 24" width="24" height="24" fill="#000000">
+//             <path d="M12 2V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.66-.67 3.15-1.76 4.24l1.42 1.42A7.939 7.939 0 0020 12c0-4.42-3.58-8-8-8zm-6 10c0-1.66.67-3.15 1.76-4.24L5.34 6.34A7.939 7.939 0 004 12c0 4.42 3.58 8 8 8v1l4-4-4-4v3c-3.31 0-6-2.69-6-6z" />
+//           </svg>
+//         </button>
+//       </div>
+//       <ReactMarkdown>{response}</ReactMarkdown>
+//       {savedBookmark && (
+//         <div
+//           // on top of al the content
+//           style={{
+//             position: "absolute",
+//             top: "50%",
+//             left: "50%",
+//             transform: "translate(-50%, -50%)",
+//             backgroundColor: "green",
+//             padding: "20px",
+//             borderRadius: "10px",
+//             color: "white",
+//           }}
+//         >
+//           <p>Summary saved successfully!</p>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+// const buttonStyle: React.CSSProperties = {
+//   padding: "1rem 2rem",
+//   borderRadius: "5px",
+//   border: "none",
+//   color: "white",
+//   textTransform: "capitalize",
+//   cursor: "pointer",
+//   fontWeight: "bold",
+// };
+// export default ShowSummary;
 
 
 
@@ -46647,39 +45942,28 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 const ShowSummary = ({ title, videoId, videoDetails }) => {
     const currentUrl = (0,_useLocations__WEBPACK_IMPORTED_MODULE_7__["default"])();
-    const decompressBufferString = (str) => {
-        const bf = buffer__WEBPACK_IMPORTED_MODULE_3__.Buffer.from(str, "base64");
-        const decompressedSummary = pako__WEBPACK_IMPORTED_MODULE_2__["default"].inflate(bf, { to: "string" });
-        return decompressedSummary;
-    };
     const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
     const [isTyping, setIsTyping] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
     const [fullResponse, setFullResponse] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
     const [typingIndex, setTypingIndex] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
     const [response, setResponse] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
     const [savedBookmark, setSavedBookmark] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-    //   check localstorage
+    const decompressBufferString = (str) => {
+        const bf = buffer__WEBPACK_IMPORTED_MODULE_3__.Buffer.from(str, "base64");
+        return pako__WEBPACK_IMPORTED_MODULE_2__["default"].inflate(bf, { to: "string" });
+    };
     const checkLocalStorage = (videoId) => {
-        const bookmark = localStorage.getItem(videoId);
-        if (bookmark) {
-            return true;
-        }
-        return false;
+        return localStorage.getItem(videoId) !== null;
     };
     const add2LocalStorage = (videoId, summary) => {
-        // only add 5 in sequence if more remove the first one
         const queue = JSON.parse(localStorage.getItem("summaryQueue")) || [];
         if (queue.length >= 5) {
-            const videoId = queue.shift();
-            localStorage.removeItem(videoId);
-            //now video id is reoved from queue now save the new queue array in localstorage
-            localStorage.setItem("summaryQueue", JSON.stringify(queue));
+            const removedId = queue.shift();
+            localStorage.removeItem(removedId);
         }
-        else {
-            queue.push(videoId);
-            localStorage.setItem("summaryQueue", JSON.stringify(queue));
-            localStorage.setItem(videoId, JSON.stringify(summary));
-        }
+        queue.push(videoId);
+        localStorage.setItem("summaryQueue", JSON.stringify(queue));
+        localStorage.setItem(videoId, JSON.stringify(summary));
     };
     const fetchBookmark = () => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -46689,11 +45973,7 @@ const ShowSummary = ({ title, videoId, videoDetails }) => {
             const videoId = new URL(ytLink).searchParams.get("v");
             if (checkLocalStorage(videoId)) {
                 const summary = JSON.parse(localStorage.getItem(videoId));
-                const decompressed = summary;
-                setFullResponse(decompressed); // Set the full response text
-                setIsTyping(true); // Start typing effect
-                setTypingIndex(0); // Reset typing index
-                setResponse(""); // Clear current response
+                setFullResponse(summary);
             }
             else {
                 const { title, subtitles, description } = yield (0,_utils_getYTSubtitleFromPage__WEBPACK_IMPORTED_MODULE_6__.getYTSubtitleFromPage)(ytLink);
@@ -46704,24 +45984,22 @@ const ShowSummary = ({ title, videoId, videoDetails }) => {
                     videoDetails,
                 });
                 if (res.statusCode === 200) {
-                    // Save to localstorage
                     const decompressed = decompressBufferString(res.data.summary);
                     add2LocalStorage(videoId, decompressed);
-                    setFullResponse(decompressed); // Set the full response text
-                    setIsTyping(true); // Start typing effect
-                    setTypingIndex(0); // Reset typing index
-                    setResponse(""); // Clear current response
+                    setFullResponse(decompressed);
                 }
                 else {
                     throw new Error(res.message);
                 }
             }
+            setTypingIndex(0);
+            setResponse("");
+            setIsTyping(true);
         }
         catch (error) {
             console.error("Error fetching bookmark:", error);
         }
         finally {
-            setIsTyping(true);
             setLoading(false);
         }
     });
@@ -46736,12 +46014,6 @@ const ShowSummary = ({ title, videoId, videoDetails }) => {
             }, 20);
             return () => clearTimeout(timeout);
         }
-        else {
-            //   setIsTyping(false);
-        }
-        return () => {
-            //   setIsTyping(false);
-        };
     }, [isTyping, typingIndex, fullResponse]);
     const saveSummary = () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield _utils_services__WEBPACK_IMPORTED_MODULE_1__._bookmarkAccountService.createBookmark({
@@ -46751,85 +46023,79 @@ const ShowSummary = ({ title, videoId, videoDetails }) => {
             url: `https://www.youtube.com/watch?v=${videoId}`,
         });
         if (res.statusCode === 200) {
-            console.log("Summary saved successfully");
             setSavedBookmark(true);
         }
     });
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-        console.log("Running Useeffedt");
-        let timeout;
         if (savedBookmark) {
-            console.log("Saved bookmark:", savedBookmark);
-            timeout = setTimeout(() => {
+            const timeout = setTimeout(() => {
                 setSavedBookmark(false);
             }, 2000);
+            return () => clearTimeout(timeout);
         }
-        else {
-        }
-        return () => clearTimeout(timeout);
     }, [savedBookmark]);
     const toggleTyping = () => {
-        setIsTyping(!isTyping); // Toggle the isTyping state
+        setIsTyping(!isTyping);
     };
-    return loading ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", { 
-        // plus animation
-        style: {
-            width: "100px",
-            height: "100px",
-            backgroundColor: "#462FEB",
-            borderRadius: "50%",
-            animation: "pulse 2s infinite",
-        }, src: _utils_constant__WEBPACK_IMPORTED_MODULE_4__.LOGO_BASE64 })) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null,
-        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: {
-                display: "flex",
-                justifyContent: "end",
-                alignItems: "center",
-                marginTop: "-40px",
-            } },
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: saveSummary, style: {
-                    backgroundColor: "#462FEB",
-                    color: "white",
-                    padding: "10px",
-                    borderRadius: "10px",
-                    border: "none",
-                    cursor: "pointer",
-                } }, "Save Summary"),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: toggleTyping, style: {
-                    // backgroundColor: { isTyping } ? "#FF0000" : "#00FF00",
-                    color: "white",
-                    // padding: "10px",
-                    // borderRadius: "10px",
-                    border: "none",
-                    cursor: "pointer",
-                    marginLeft: "10px",
-                } }, isTyping ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("svg", { viewBox: "0 0 24 24", width: "24", height: "24", fill: "FF0000" },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", { d: "M6 6h12v12H6z" }))) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("svg", { viewBox: "0 0 24 24", width: "24", height: "24", fill: "00FF00" },
+    return loading ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", { style: loadingStyle, src: _utils_constant__WEBPACK_IMPORTED_MODULE_4__.LOGO_BASE64 })) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null,
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: buttonContainerStyle },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: saveSummary, style: buttonStyle }, "Save Summary"),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: toggleTyping, style: buttonStyleSVG }, isTyping ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("svg", { viewBox: "0 0 24 24", width: "24", height: "24", fill: "red" },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", { d: "M6 6h12v12H6z" }))) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("svg", { viewBox: "0 0 24 24", width: "24", height: "24", fill: "green" },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", { d: "M8 5v14l11-7z" })))),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: fetchBookmark, style: {
-                    // backgroundColor: { isTyping } ? "#FF0000" : "#00FF00",
-                    color: "white",
-                    // padding: "10px",
-                    // borderRadius: "10px",
-                    border: "none",
-                    cursor: "pointer",
-                    marginLeft: "10px",
-                } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: fetchBookmark, style: buttonStyleSVG },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement("svg", { viewBox: "0 0 24 24", width: "24", height: "24", fill: "#000000" },
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", { d: "M12 2V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.66-.67 3.15-1.76 4.24l1.42 1.42A7.939 7.939 0 0020 12c0-4.42-3.58-8-8-8zm-6 10c0-1.66.67-3.15 1.76-4.24L5.34 6.34A7.939 7.939 0 004 12c0 4.42 3.58 8 8 8v1l4-4-4-4v3c-3.31 0-6-2.69-6-6z" })))),
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_markdown__WEBPACK_IMPORTED_MODULE_8__.Markdown, null, response),
-        savedBookmark && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { 
-            // on top of al the content
-            style: {
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                backgroundColor: "green",
-                padding: "20px",
-                borderRadius: "10px",
-                color: "white",
-            } },
+        savedBookmark && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: savedMessageStyle },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Summary saved successfully!")))));
+};
+const loadingStyle = {
+    width: "100px",
+    height: "100px",
+    backgroundColor: "#462FEB",
+    borderRadius: "50%",
+    animation: "pulse 2s infinite",
+};
+const buttonContainerStyle = {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    marginTop: "-60px",
+    gap: "10px",
+};
+const buttonStyle = {
+    padding: "1rem 2rem",
+    borderRadius: "5px",
+    border: "none",
+    color: "white",
+    backgroundColor: "#4456FF",
+    textTransform: "capitalize",
+    cursor: "pointer",
+    fontWeight: "bold",
+    marginLeft: "10px",
+};
+const buttonStyleSVG = {
+    padding: "1rem 2rem",
+    borderRadius: "5px",
+    border: "none",
+    color: "#4456FF",
+    backgroundColor: "white",
+    textTransform: "capitalize",
+    cursor: "pointer",
+    fontWeight: "bold",
+    marginLeft: "10px",
+};
+const savedMessageStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "green",
+    padding: "20px",
+    borderRadius: "10px",
+    color: "white",
+    textAlign: "center",
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ShowSummary);
 
@@ -46847,31 +46113,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _ShowSummary__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowSummary */ "./src/components/App/ShowSummary.tsx");
-// // import React, { useState, useEffect, useCallback } from "react";
-// // const DemoComp = () => {
-// //     const [isDemo, setIsDemo] = useState(false);
-// //     const handleDemo = () => {
-// //         setIsDemo(!isDemo);
-// //     }
-// //     return (
-// //         <div>
-// //         <button onClick={handleDemo}>Toggle Demo</button>
-// //         {isDemo && <div>SecondBrain Demo</div>}
-// //         </div>
-// //     );
-// //     }
-// // export default DemoComp;
+/* harmony import */ var _Notes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Notes */ "./src/components/App/Notes.tsx");
+/* harmony import */ var _QuizComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuizComponent */ "./src/components/App/QuizComponent.tsx");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _ShowSummary__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ShowSummary */ "./src/components/App/ShowSummary.tsx");
 // import React, { useEffect, useState } from "react";
 // import { _bookmarkAccountService } from "../../utils/services";
 // import pako from "pako";
+// import { Buffer } from "buffer";
+// import ReactMarkdown from "react-markdown";
+// import ShowSummary from './ShowSummary';
+
+
 // const YoutubeButtons = ({ videoDetails, title, videoId }: any) => {
 //   const [optionSelected, setOptionSelected] = useState<string | null>(null);
-//   const isYoutubeLink = (url) => {
-//     return url.includes("youtube.com") || url.includes("youtu.be");
-//   };
 //   const [loading, setLoading] = useState(true);
 //   const [bookmark, setBookmark] = useState<any>({});
 //   const [isTyping, setIsTyping] = useState(false);
@@ -46879,51 +46135,31 @@ __webpack_require__.r(__webpack_exports__);
 //   const [typingIndex, setTypingIndex] = useState(0);
 //   const [response, setResponse] = useState("");
 //   const options = ["summarize", "quiz", "notes"];
-//   const decompressBufferString = (str) => {
-//     const bf = Buffer.from(str, "base64");
-//     const decompressedSummary = pako.inflate(bf, { to: "string" });
-//     return decompressedSummary;
-//   };
 //   const renderContent = () => {
 //     switch (optionSelected) {
 //       case "summarize":
-//         return <div>Summarize content goes here.</div>;
+//       return <ShowSummary title={title} videoId={videoId} videoDetails={videoDetails}
+//          />;
 //       case "quiz":
-//         return <div>Quiz content goes here.</div>;
+//         return (
+//           <div
+//             style={{
+//               display: "flex",
+//               justifyContent: "center",
+//               alignItems: "center",
+//               // how to know screen is dark or light
+//               color: "black",
+//             }}
+//           >
+//             Quiz content goes here.
+//           </div>
+//         );
 //       case "notes":
 //         return <div>Notes content goes here.</div>;
 //       default:
 //         return <div>Please select an option.</div>;
 //     }
 //   };
-//   const fetchBookmark = async ({ title, videoId, videoDetails }: any) => {
-//     console.log({
-//       videoDetails,
-//     });
-//     try {
-//       const res = await _bookmarkAccountService.getSummaryByVideoId({
-//         title,
-//         videoId,
-//         videoDetails,
-//       });
-//       if (res.statusCode === 200) {
-//         setBookmark(res.data);
-//         const decompressed = decompressBufferString(res.data);
-//         console.log({ decompressed });
-//       } else {
-//         throw new Error(res.message);
-//       }
-//     } catch (error) {
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-//   useEffect(() => {
-//     console.log({ optionSelected });
-//     if (optionSelected === "summarize") {
-//       fetchBookmark({ title, videoId, videoDetails });
-//     }
-//   }, [optionSelected]);
 //   useEffect(() => {
 //     if (isTyping && typingIndex < fullResponse.length) {
 //       const timeout = setTimeout(() => {
@@ -46936,54 +46172,87 @@ __webpack_require__.r(__webpack_exports__);
 //     }
 //   }, [isTyping, typingIndex, fullResponse]);
 //   return (
-//     <>
-//       <div>
+//     <div
+//       style={{
+//         backgroundColor: "white",
+//         padding: "1rem",
+//         paddingLeft: "3rem",
+//         paddingRight: "3rem",
+//         borderRadius: "10px",
+//         boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+//         display: "flex",
+//         flexDirection: "column",
+//         gap: "1rem",
+//         textDecoration: "capitalize",
+//         fontSize: "1.5rem",
+//       }}
+//     >
+//       <div
+//         style={{
+//           display: "flex",
+//           gap: "1rem",
+//         }}
+//       >
 //         {options.map((option) => (
-//           <button key={option} onClick={() => setOptionSelected(option)}>
+//           <button
+//             key={option}
+//             onClick={() => setOptionSelected(option)}
+//             style={{
+//               padding: "0.5rem 1rem",
+//               borderRadius: "5px",
+//               border: "none",
+//               backgroundColor: optionSelected === option ? "#462FEB" : "#868CFF",
+//               color: "white",
+//               // capitalize
+//               textTransform: "capitalize",
+//             }}
+//           >
 //             {option}
 //           </button>
 //         ))}
 //       </div>
-//       <div>{renderContent()}</div>
-//     </>
+//       <div
+//         style={{
+//           backgroundColor: "white",
+//         }}
+//       >
+//         {renderContent()}
+//       </div>
+//     </div>
 //   );
 // };
 // export default YoutubeButtons;
 
 
-const YoutubeButtons = ({ videoDetails, title, videoId }) => {
-    const [optionSelected, setOptionSelected] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-    const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
-    const [bookmark, setBookmark] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
-    const [isTyping, setIsTyping] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-    const [fullResponse, setFullResponse] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
-    const [typingIndex, setTypingIndex] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
-    const [response, setResponse] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+const YoutubeButtons = ({ videoDetails, title, videoId, }) => {
+    const [optionSelected, setOptionSelected] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
+    const [isTyping, setIsTyping] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
+    const [fullResponse, setFullResponse] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("");
+    const [typingIndex, setTypingIndex] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0);
+    const [response, setResponse] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("");
+    const [hoveredButton, setHoveredButton] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
     const options = ["summarize", "quiz", "notes"];
+    const primaryColor = "#4456FF";
     const renderContent = () => {
         switch (optionSelected) {
             case "summarize":
-                return react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ShowSummary__WEBPACK_IMPORTED_MODULE_1__["default"], { title: title, videoId: videoId, videoDetails: videoDetails });
+                return (react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ShowSummary__WEBPACK_IMPORTED_MODULE_3__["default"], { title: title, videoId: videoId, videoDetails: videoDetails }));
             case "quiz":
-                return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: {
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        // how to know screen is dark or light
-                        color: "black",
-                    } }, "Quiz content goes here."));
+                return (react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", { style: contentTextStyle },
+                    "Quiz content goes here.",
+                    react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_QuizComponent__WEBPACK_IMPORTED_MODULE_1__["default"], { url: `https://www.youtube.com/watch?v=${videoId}` })));
             case "notes":
-                return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Notes content goes here.");
+                return (
+                // <div style={contentTextStyle}>
+                // {/* Notes content goes here. */}
+                react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_Notes__WEBPACK_IMPORTED_MODULE_0__["default"], null)
+                // </div>
+                );
             default:
-                return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Please select an option.");
+                return react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", { style: contentTextStyle }, "Please select an option.");
         }
     };
-    // useEffect(() => {
-    //   if (optionSelected === "summarize") {
-    //     fetchBookmark({ title, videoId, videoDetails });
-    //   }
-    // }, [optionSelected]);
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
         if (isTyping && typingIndex < fullResponse.length) {
             const timeout = setTimeout(() => {
                 setResponse((prev) => prev + fullResponse.charAt(typingIndex));
@@ -46995,34 +46264,47 @@ const YoutubeButtons = ({ videoDetails, title, videoId }) => {
             setIsTyping(false);
         }
     }, [isTyping, typingIndex, fullResponse]);
-    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: {
-            backgroundColor: "white",
-            padding: "1rem",
-            paddingLeft: "3rem",
-            paddingRight: "3rem",
-            borderRadius: "10px",
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-            textDecoration: "capitalize",
-            fontSize: "1.5rem",
-        } },
-        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: {
-                display: "flex",
-                gap: "1rem",
-            } }, options.map((option) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { key: option, onClick: () => setOptionSelected(option), style: {
-                padding: "0.5rem 1rem",
-                borderRadius: "5px",
-                border: "none",
-                backgroundColor: optionSelected === option ? "#462FEB" : "#868CFF",
-                color: "white",
-                // capitalize
-                textTransform: "capitalize",
-            } }, option)))),
-        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: {
-                backgroundColor: "white",
-            } }, renderContent())));
+    return (react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", { style: containerStyle },
+        react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", { style: buttonContainerStyle }, options.map((option) => (react__WEBPACK_IMPORTED_MODULE_2___default().createElement("button", { key: option, onClick: () => setOptionSelected(option), style: Object.assign(Object.assign({}, buttonStyle), { backgroundColor: optionSelected === option || hoveredButton === option
+                    ? primaryColor
+                    : "#868CFF" }), onMouseOver: () => setHoveredButton(option), onMouseOut: () => setHoveredButton(null) }, option)))),
+        react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", { style: contentStyle }, renderContent())));
+};
+const containerStyle = {
+    backgroundColor: "white",
+    padding: "1rem 3rem",
+    borderRadius: "10px",
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
+    textTransform: "capitalize",
+    fontSize: "1.5rem",
+};
+const buttonContainerStyle = {
+    display: "flex",
+    gap: "1rem",
+};
+const buttonStyle = {
+    padding: "1rem 2rem",
+    borderRadius: "5px",
+    border: "none",
+    color: "white",
+    textTransform: "capitalize",
+    cursor: "pointer",
+    fontWeight: "bold",
+};
+const contentStyle = {
+    backgroundColor: "white",
+    padding: "1rem",
+    borderRadius: "10px",
+    boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)",
+};
+const contentTextStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "black",
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (YoutubeButtons);
 
@@ -47289,42 +46571,6 @@ const REMOVE_QUESTION = (quizId, questionId) => `/quiz/${quizId}/questions/${que
 
 /***/ }),
 
-/***/ "./src/utils/gemeniModel.ts":
-/*!**********************************!*\
-  !*** ./src/utils/gemeniModel.ts ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "generateContent": () => (/* binding */ generateContent)
-/* harmony export */ });
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-const { GoogleGenerativeAI } = __webpack_require__(/*! @google/generative-ai */ "./node_modules/@google/generative-ai/dist/index.js");
-// Access your API key as an environment variable (see "Set up your API key" above)
-const genAI = new GoogleGenerativeAI("AIzaSyA5v-Q4jakiXbXfrjXmwvc_i-USD-M023I");
-const generateContent = (prompt) => __awaiter(void 0, void 0, void 0, function* () {
-    // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const result = yield model.generateContent(prompt);
-    const response = yield result.response;
-    const text = response.text();
-    console.log(text);
-    return text;
-});
-
-
-/***/ }),
-
 /***/ "./src/utils/getYTSubtitleFromPage.ts":
 /*!********************************************!*\
   !*** ./src/utils/getYTSubtitleFromPage.ts ***!
@@ -47574,6 +46820,146 @@ class BookmarkAccountService extends _http_service__WEBPACK_IMPORTED_MODULE_1__.
     }
 }
 const _bookmarkAccountService = new BookmarkAccountService();
+
+
+/***/ }),
+
+/***/ "./src/utils/services/api/quiz.service.ts":
+/*!************************************************!*\
+  !*** ./src/utils/services/api/quiz.service.ts ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "QuizService": () => (/* binding */ QuizService),
+/* harmony export */   "_quizService": () => (/* binding */ _quizService)
+/* harmony export */ });
+/* harmony import */ var _constant__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constant */ "./src/utils/constant.ts");
+/* harmony import */ var _http_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../http.service */ "./src/utils/services/http.service.ts");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+
+class QuizService extends _http_service__WEBPACK_IMPORTED_MODULE_1__.HttpService {
+    constructor() {
+        super();
+    }
+    createQuiz(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.post(_constant__WEBPACK_IMPORTED_MODULE_0__.CREATE_QUIZ, data);
+        });
+    }
+    getQuizById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.get((0,_constant__WEBPACK_IMPORTED_MODULE_0__.GET_QUIZ_BY_ID)(id));
+        });
+    }
+    getQuizzes(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.get(_constant__WEBPACK_IMPORTED_MODULE_0__.GET_QUIZZES, query);
+        });
+    }
+    getSingleQuiz(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.get(_constant__WEBPACK_IMPORTED_MODULE_0__.GET_SINGLE_QUIZ, query);
+        });
+    }
+    updateQuiz(id, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.put((0,_constant__WEBPACK_IMPORTED_MODULE_0__.GET_QUIZ_BY_ID)(id), data);
+        });
+    }
+    deleteQuiz(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.delete((0,_constant__WEBPACK_IMPORTED_MODULE_0__.GET_QUIZ_BY_ID)(id));
+        });
+    }
+    addQuestion(quizId, question) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.post((0,_constant__WEBPACK_IMPORTED_MODULE_0__.ADD_QUESTION)(quizId), question);
+        });
+    }
+    removeQuestion(quizId, questionId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.delete((0,_constant__WEBPACK_IMPORTED_MODULE_0__.REMOVE_QUESTION)(quizId, questionId));
+        });
+    }
+}
+const _quizService = new QuizService();
+
+
+/***/ }),
+
+/***/ "./src/utils/services/api/quiz_progress.service.ts":
+/*!*********************************************************!*\
+  !*** ./src/utils/services/api/quiz_progress.service.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ProgressService": () => (/* binding */ ProgressService),
+/* harmony export */   "_progressService": () => (/* binding */ _progressService)
+/* harmony export */ });
+/* harmony import */ var _constant__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constant */ "./src/utils/constant.ts");
+/* harmony import */ var _http_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../http.service */ "./src/utils/services/http.service.ts");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+
+class ProgressService extends _http_service__WEBPACK_IMPORTED_MODULE_1__.HttpService {
+    constructor() {
+        super();
+    }
+    createProgress(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.post(_constant__WEBPACK_IMPORTED_MODULE_0__.CREATE_PROGRESS, data);
+        });
+    }
+    getProgressById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.get((0,_constant__WEBPACK_IMPORTED_MODULE_0__.GET_PROGRESS_BY_ID)(id));
+        });
+    }
+    getProgress(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.get(_constant__WEBPACK_IMPORTED_MODULE_0__.GET_PROGRESS, query);
+        });
+    }
+    updateProgress(id, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.put((0,_constant__WEBPACK_IMPORTED_MODULE_0__.GET_PROGRESS_BY_ID)(id), data);
+        });
+    }
+    deleteProgress(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.delete((0,_constant__WEBPACK_IMPORTED_MODULE_0__.GET_PROGRESS_BY_ID)(id));
+        });
+    }
+    addResponse(progressId, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.post((0,_constant__WEBPACK_IMPORTED_MODULE_0__.ADD_RESPONSE)(progressId), response);
+        });
+    }
+}
+const _progressService = new ProgressService();
 
 
 /***/ }),
@@ -84354,13 +83740,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var _utils_services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/services */ "./src/utils/services/index.ts");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var _utils_getYTSubtitleFromPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/getYTSubtitleFromPage */ "./src/utils/getYTSubtitleFromPage.ts");
-/* harmony import */ var _utils_gemeniModel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/gemeniModel */ "./src/utils/gemeniModel.ts");
-/* harmony import */ var _utils_compressfunc__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/compressfunc */ "./src/utils/compressfunc.ts");
-/* harmony import */ var _components_App_YoutubeButtons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/App/YoutubeButtons */ "./src/components/App/YoutubeButtons.tsx");
-/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
-/* harmony import */ var _utils_constant__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/constant */ "./src/utils/constant.ts");
+/* harmony import */ var _utils_compressfunc__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/compressfunc */ "./src/utils/compressfunc.ts");
+/* harmony import */ var _components_App_YoutubeButtons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/App/YoutubeButtons */ "./src/components/App/YoutubeButtons.tsx");
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var _utils_constant__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/constant */ "./src/utils/constant.ts");
 "use client";
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -84371,7 +83756,6 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-
 
 
 
@@ -84393,29 +83777,7 @@ const App = () => {
     const isLinkedIn = (url) => {
         return url.startsWith("https://www.linkedin.com/");
     };
-    const getYTVideoDetailFromHTML = () => {
-        var xpath = "/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[1]/player-microformat-renderer/script/text()";
-        var result = document.evaluate(xpath, document, null, XPathResult.STRING_TYPE, null);
-        var jsonString = result.stringValue;
-        var videoDetail = JSON.parse(jsonString);
-    };
     // Login to extension
-    const checkPage = () => {
-        const link = window.location.href;
-        if (link === "https://ai.soobati.com/dashboard/profile" ||
-            "http://localhost:3000/dashboard/profile") {
-            console.log("inside if");
-            const alldiv = document.querySelectorAll("div");
-            console.log("alldiv", alldiv);
-            // all divs id
-            alldiv.forEach((div) => {
-                console.log("div", div);
-            });
-            const loginButton = document.querySelector("#extension-login");
-            loginButton.click();
-            // const loginButton = document.querySelector(
-        }
-    };
     // login to extension end
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
         let title = document.title;
@@ -84427,6 +83789,7 @@ const App = () => {
                 let innerText = document.body.innerText;
                 let innerHTML = document.body.innerHTML;
                 console.log("innerText", { innerText, innerHTML });
+                console.log("window.location.href", window.location.href);
                 const url = window.location.href;
                 setUrl(url);
                 if (url.startsWith("https://chatgpt.com/")) {
@@ -84457,7 +83820,7 @@ const App = () => {
                             console.log("278");
                             const cleanHTML = removeAllAttributesFromHTML(innerHTML);
                             console.log("281", { cleanHTML });
-                            cleanCompressedHTML = (0,_utils_compressfunc__WEBPACK_IMPORTED_MODULE_5__.compressString)(cleanHTML);
+                            cleanCompressedHTML = (0,_utils_compressfunc__WEBPACK_IMPORTED_MODULE_4__.compressString)(cleanHTML);
                             // console.log("283",{compressedHTML})
                             // cleanCompressedHTML = compressedHTML;
                             // cleanCompressedHTML = decompressString(cleanHTML);
@@ -84476,10 +83839,10 @@ const App = () => {
                         if (isYoutube(ytLink)) {
                             const videoId = new URL(ytLink).searchParams.get("v");
                             const { title, subtitles, description } = yield (0,_utils_getYTSubtitleFromPage__WEBPACK_IMPORTED_MODULE_3__.getYTSubtitleFromPage)(ytLink);
-                            const compressSubtitle = (0,_utils_compressfunc__WEBPACK_IMPORTED_MODULE_5__.compressString)(subtitles);
+                            const compressSubtitle = (0,_utils_compressfunc__WEBPACK_IMPORTED_MODULE_4__.compressString)(subtitles);
                             console.log({
                                 compressSubtitle,
-                                decompressString: (0,_utils_compressfunc__WEBPACK_IMPORTED_MODULE_5__.decompressString)(compressSubtitle),
+                                decompressString: (0,_utils_compressfunc__WEBPACK_IMPORTED_MODULE_4__.decompressString)(compressSubtitle),
                             }, "NEW from 310 NEW from 310");
                             // return;
                             const res = yield _utils_services__WEBPACK_IMPORTED_MODULE_2__._bookmarkAccountService.createBookmark({
@@ -84526,7 +83889,7 @@ const App = () => {
             document.readyState === "interactive") {
             handleLoad();
             addLinkedInButtons();
-            checkPage();
+            // checkPage();
         }
         else {
             window.addEventListener("load", handleLoad);
@@ -84571,29 +83934,17 @@ const App = () => {
                 if (!div.querySelector(".additional-button") &&
                     !processedPosts.has(postId)) {
                     const newButton = document.createElement("button");
-                    newButton.innerHTML = `
-          <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.75 6L7.5 5.25H16.5L17.25 6V19.3162L12 16.2051L6.75 19.3162V6ZM8.25 6.75V16.6838L12 14.4615L15.75 16.6838V6.75H8.25Z" fill="#fff"/>
-          </svg>
-        `;
+                    newButton.innerHTML = `<img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAANt0lEQVR4nO1ZeZTVxZX+7q3f9pbehG52CEgkcBRUjDhu7To0SwAlDRgXXHHiOHPG5HgmjE42GScmRg1JnCSMM2pwgWeOtrJoyMgQB9xwyYiIorIJAs3STfd7v62q7vzRDQdbHjTi5Myc4/dXd9Wte7+v7q9u1asCvsAX+L8HEakWET64bflycUTE+7xj0efpTEQycRjfxQ7vECM9vMCbTUQxAITF8PvMyPmZzK0AkBSLow3z3kwm8+GxxOQjm5Ql60ZR9HWd6G9HUXRCZ7MRkRoietOKHQDAAQAJwyGsqBeIfBHJdo4XsvhhHMW/LJVK9X92AXEp/qa11rewq0jkn0SkBxElRJKSpWoAW+I4rgeABLiGlRIxdngcxwMAwM/nXwdJK1L8KgNsAABpb+8jIsGfRQDIjrDW/ofneS8aY1bHpfhMABCRLVr0IABMRNtEpBoAua57EzE9RkSnAkDc1nYSESV+hf8WZbObd+3aVRkz34lWZD4zp3IQETculRp1ktwoIjUAEIbh9XEYzikWi/3DYvEncRyf0mnbU0ROEpFK4MDi5c4+b//4Unv7lVEUTdgfo1gs3hKH8dVHy+2Ii1hEKCpFNxNoq+NQxloZ6wb+TQCiqBTNcn23RqlkOVF21djLd/aJ9tlBRF4P35VK9tKc0YqJxCoHYo3al0Rme8bjD3/x47bdgwcPjjon43hYe0eQzV6zf9F/ngKcOIzv9zP+jUQkUan0HSF6I5PJPLff5rQLt321rgefKopCUs77xLIpsWlLsmVdfN5559m1a0FhzTbfxlWVTqz7w5qhiaSVTLzO7mt5eenSfrVJ4lT7vr+ma/woiob7vr+ViPZ9JgEAkETRrdYisLAPktB1QZYLRP7bDVM/OkWxe5Zl+sCLii82NQ1u6Y4/ALj4io9zGatGW0sjihFeXf5U7WsHJm2zZOK6+Hwx5kwCjdFif5bP5xd1W4CIUBzHk9jwDi/nvSQinMbxzaRUL0dkyWl/4b7Se/COaUycBpAlhUKv9u4S74r6mRuCqjh3oRauzVnzxBNP9GoPi9G3lKLeaZoGDGY/l7mNiFq7LSAN0wZDZrgSeYdcd6BS6iki2tnR+54/YXrVtSRm9aKFfV/9rMS7YsK03ScS0wXaRI8tXdhnNxHZsFicA+GNmXzmX8uNO2QZNTbJKuaRFrhIa52JStFNQEfax02vuAHKf+7zJA8Aixf2WOMqr8CO2zh22pZqEWERioNc8AgAlEqlc+MwnCMbPrlPlPuEOEmSk7XWHgmdyyTvBbls07gZO65XZF5Y9Fi/dYcjM276zhPE5iZYdoay2CJT+pITbl329NPD2xobV2VC58RBiQ4qiYs7n1tQs/HgsZNmNPfVlE6xe/s8sHQp0ra2tuN81/1bEaoF454gCNYfUcB+JMXiaCuqLsgHS8dN3TZOWJeeLQxcUc5+1qzV7qaWYbdbCv5OsVMJAMwABDBJugasX7TinAOioQIkDAiTfrrC7vtWodBr+34/DTO2j1TiDlu8oEchLpWmGSDIZrMPHypmt6pQwyVb+ivHHbe40Hte177GxoWqnRq+JuQ1iKVRUN4ZYgERACQgG68ECOT4ZwEAESA6fF6h9KhB7mLHD6anSbxCvL0Tls3vUzwQc9r2y12WN595vM/bh+PmdEeAcrwLjU6Wdm2/+JL36/ah3wPgYCJ1ToVIB0kQIKI/9GnvPEAhtj2/ROB+5ABE8RLF0Mbod40BWPn1rnbGAHh+v28/9hcnXnI5IGsBknLcjngWmjSjua9AzLNPDvioax+5/eaxF0y0BjC6s9GGbxlTXCmAMKhOKD9AWH0MiVcrDzBptNjCbU2l8gqh4B+sNZbT9jtS609uuCxZ8LUr9g4GgKammhZRsm389I+/cjh+R8xAKvpU5djVnxDV2DosYTVFbPKG0e44VsolANamb/m2dQ4Y2cg6FVD+SE0Vd4iYVnBpNtLiSoJJwLm7rQjYhr8mMX8ynDmNHH8WKyBOMiOmXNl63lO/rdqtTPKKZa8ewDvl+B02A+NnfDzGWvWXmovb9reNa9xzUkzZZeTmfgT2qtyk+So27T9gE97KiOdZztRp9qvAqo8VK1rHK8XYvaDsvWLRAuJa5aoqmPQxx9HvkKMjcvxZWqfr0ih5kR3/xDD2vg4AiwsDtglxUD+z/BG7rIAJ07ZfZAwNUawed5PqRgCYNUtcTdlfsuMMsBqw1rlYueI5aF2roaZZys9Nuernqa28l8mpJZus9GXPb1wU74SFZ1X2N0QsJm7/obAap8Wp1jZ/gzG65NqWn7qq/ec2SddbyOkdLEiUtZuP0801Ry3AQgaQTl9YsqDHKgNbCYC2tOw5nck/J03TLcamu0E8POUek614IkDKBIgFCIrEAoDqQ242o1y8L6J/T0QAZ28nojoHpfvBFXPYCc6B2GaX7UZrVU8w91RCBzK+eGHvPzz5SO32cjzLrgHS8jx7uSkTZ+wRkXA1ANHWP4s43uzbPd+1rCoM9fhnYe/SVB13Tkb23hLZqjyzO7KjhALE7vGxyf+CCLuUim4TIy1Qbr2AQeL6YqxlZnZQmhvb3F+Rl59KWmtF4RNd2JStQofdBxobxQPgFQrUDgAXNYZ3MqmrPGqdDaFSLNUPE1SWFWCs3uRS6R9B3FMgLhkdacp+g5U/xlqAgJIje64TSXLCfmhRNV8sEwgA6bUse34FrrmBjH1gaSH42eF4dSsDAFAoUAIg2f+/QrKLncp+ia3+sYP22YDdqxyV1akOAYQpcvMgSAkSE6NVSfscY20bc+YiAFljspN80KLY8ihSTBYABFDKGWF11dWZ8O1zm5pOafkkC+mc5ENnoVsb2X4QoleMqQCz01uboJERzobYCzyU/lOR5dDkpxGrQQrt91ryzrZccY9jW79jLLURB5cIB5eVjGUHWGc7NztCx8ZHJCu6kp9w6fYh1ts5DgCU2frMokK/zV05HdWP+nDn2pesRE8yAyB/vOK0qI3tbcXrBcCAUUkwf2LFRkn6MqCqDVf9lDheSHrPN61JX2cnMx1Id1mdbCQYEdLNxoRzKyW4rWs869L41LTPT6LgcQ33okNxKpsBEcnPnftR9e9XxiMXLxy6BABWrDhfT56599qohE2O44w0qdQKbCpe7q4oDXYQq14WdrQ1bc8YVNwMAZhVDkaNIKV3kYmXKMc91Wjv1CzvOV+rTA9J461LDjrIfZKEKio67vhBfXfnPZfVoUzKZiAtlYZPGluVjyL3K/X1yw8IbXqopuW5QvYWa5Nl7Fac4VG40NjkBTD1EGvhOOxbDk6wpPpAAGsAg+Aqa/MnAMG1YgAmu6ppQZ+Nix+tfq0seQCqFC8wOrkiU+EM/f7s/C4R+VTRKZsBL5d7VUTyvt++0+s9cAiA9w7uN5bHeJ4/JbVOgyPht2Fa/l2s20tMbqyy4VoLL2anQwCTM4iU89cOATqJV9S1vP9YubgHQ2co54i8dt+PBiwCEBN9eiGXzYCIVAG6oW8/ekO0d3rXfgV9X5qY2PFUby3u1SRoZUo2QafrLGfPd9D692KiRYDeYK1u1kavs2npnmywa+r8ZScXDxXzU+Q4PbOlpfjfQDgqDMNeh7Ipuw90pisAYCZc+vH11kHh2ULf5oNtxk7dNxme/zfQbU8T586y1jmbXacv6dLdedn93UJhYNjYuCbfBi/TK+u2PfRQxz1Qd3DxFW/mqHTcNf/yk/xve/ZUTlVV1e5D2ZXfiYmk41pQD9uX8LNVjh0P4KGDbZ77XWUTgKaGxlITu8Ekm1rNafiNJYXcgU+kUDixHcBR31qotOd4cfSqIUNq9gGoLmd3pDK6E7ud119Y1KuFmKJJM5pPO5RRCpWDALDp7UsK2W5934dDQ+PGEWSo6tkFg9akaToawCEvtYAjCCAiUwyK2SQJxw+u6/1UKslZk6d/NKCrnSP6DZOk67ht833HSn7iZVt7kvDETc3O40SUNDc3rwVgy3I8GucDT9pUM2J4ZiZL9vElhfyB8jd+6q4xYGfIkkL1Mc3+5Jl7q5NieF3v2vTJf7u/cg9RTcuRxnRbQMcNczTwxlva4i3b5VJXpX94+pH+7x4L4YMx8cqtAyVRl7y7If3d+pf7tyRh+xQvk3+UiMrOPnAUR4n169e7cWxH//re2j0DKt35xjjnTrhs2/j678lRnac+DaGG6R9daCIaH8V6/vqX66pLpVL1nXfdfUTywGd4IysWpX82izYiam1o3HG2YnsyC60OZNfrhcKJyZE9dKC+frmTrxs2SojOtEo+mPsD77++/GVjk6T6S1rrvblcbmt3/By1ABFRRGQ6/87Pnr3ZfW1d8FXPx/Ek2EnsrGOft3qlZW2FwjSzf9z3vie8cu2HFR5X9RXWw5RQvzixmz/YVPrjh68d3ypSGlRqTWpz1dWry0f/HAQcJMSJoqg+CIKVADIPPrgxnPdwtl+2xh8auGkdhBzD1gFBAAsRtopYQ0tLW5qu/+NT764XOS8DoCcRbfisPI4JIqJE1nhxHE8TkUqReJSI1DIDyzdsCIY2iN//jM2Z+pkbguXLxSHquGoUCYeKyKj29vY+cRyfdCwcPpd3YhFhIrJhGF5ARNuIyCciz3Xd7VrHIx3HX6F1XO84/gthGFZlRGzE7B/rG/H/GkTEFRESkbwUi/1ExOl8vadDHYm/wP9n/A9pCxBIvp8tLAAAAABJRU5ErkJggg==" />`;
                     newButton.style.borderRadius = "100%";
                     newButton.style.background =
-                        "linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%)";
-                    newButton.style.cursor = "pointer";
+                        // "linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%)";
+                        newButton.style.cursor = "pointer";
                     newButton.style.display = "flex";
                     newButton.style.alignItems = "center";
                     newButton.style.justifyContent = "center";
                     newButton.style.width = "30px";
                     newButton.style.height = "30px";
                     newButton.classList.add("additional-button");
-                    newButton.addEventListener("mouseover", () => {
-                        newButton.style.background =
-                            "linear-gradient(270deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%)"; // Adjust color as needed
-                    });
-                    newButton.addEventListener("mouseout", () => {
-                        newButton.style.background =
-                            "linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%)";
-                    });
                     newButton.addEventListener("click", (event) => __awaiter(void 0, void 0, void 0, function* () {
                         var _a, _b, _c;
                         event.preventDefault();
@@ -84603,7 +83954,7 @@ const App = () => {
                             return __awaiter(this, void 0, void 0, function* () {
                                 try {
                                     // Fetch the HTML content of the LinkedIn post
-                                    const response = yield axios__WEBPACK_IMPORTED_MODULE_9__["default"].get(`https://www.linkedin.com/embed/feed/update/${postId}`);
+                                    const response = yield axios__WEBPACK_IMPORTED_MODULE_8__["default"].get(`https://www.linkedin.com/embed/feed/update/${postId}`);
                                     const htmlString = response.data;
                                     // Parse the HTML string and extract the necessary information
                                     const parser = new DOMParser();
@@ -84729,15 +84080,6 @@ const App = () => {
             // End LinkedIn Summary Button
         }
     }
-    function getSummary(title) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const subtitle = yield (0,_utils_getYTSubtitleFromPage__WEBPACK_IMPORTED_MODULE_3__.getYTSubtitleFromPage)(document);
-            const generateSummaryPrompt = (title, subtitleText) => {
-                return `This is a YouTube video titled "${title}". The following text is the subtitle transcript of the video. Please provide a detailed, pointwise summary of the key points discussed in the video. If the video mentions specific numbered points or steps, include those in the summary as well. Here is the subtitle text: "${subtitleText}".`;
-            };
-            const summaryContent = yield (0,_utils_gemeniModel__WEBPACK_IMPORTED_MODULE_4__.generateContent)(generateSummaryPrompt(title, subtitle));
-        });
-    }
     // Add Button on page
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
         const createButton = () => {
@@ -84752,7 +84094,7 @@ const App = () => {
             button.style.display = "flex";
             button.style.alignItems = "center";
             // Add base64 image as innerHTML
-            button.innerHTML = `<img src="${_utils_constant__WEBPACK_IMPORTED_MODULE_8__.LOGO_BASE64}" alt="icon" style="width: 20px; height: 20px; margin-right: 5px; vertical-align: middle; border-radius: 9999px;">`;
+            button.innerHTML = `<img src="${_utils_constant__WEBPACK_IMPORTED_MODULE_7__.LOGO_BASE64}" alt="icon" style="width: 20px; height: 20px; margin-right: 5px; vertical-align: middle; border-radius: 9999px;">`;
             return button;
         };
         const addButtonToThumbnail = (thumbnail) => {
@@ -84805,6 +84147,10 @@ const App = () => {
     }, []);
     // end
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+        console.log("inside useEffect 547");
+        console.log("inside useEffect 547");
+        console.log("inside useEffect 547");
+        console.log("inside useEffect 547");
         const addComponentToSpecificDiv = () => __awaiter(void 0, void 0, void 0, function* () {
             const targetDivs = document.querySelectorAll("#expandable-metadata");
             if (targetDivs.length) {
@@ -84814,9 +84160,9 @@ const App = () => {
                 const ytLink = window.location.href;
                 const videoId = new URL(ytLink).searchParams.get("v");
                 const { title, subtitles, description } = yield (0,_utils_getYTSubtitleFromPage__WEBPACK_IMPORTED_MODULE_3__.getYTSubtitleFromPage)(ytLink);
-                const compressSubtitle = (0,_utils_compressfunc__WEBPACK_IMPORTED_MODULE_5__.compressString)(subtitles);
-                const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_7__.createRoot)(rootDiv);
-                root.render(react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_App_YoutubeButtons__WEBPACK_IMPORTED_MODULE_6__["default"], { title: title, videoId: videoId, videoDetails: compressSubtitle }));
+                const compressSubtitle = (0,_utils_compressfunc__WEBPACK_IMPORTED_MODULE_4__.compressString)(subtitles);
+                const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_6__.createRoot)(rootDiv);
+                root.render(react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_App_YoutubeButtons__WEBPACK_IMPORTED_MODULE_5__["default"], { title: title, videoId: videoId, videoDetails: compressSubtitle }));
             }
             else {
                 console.error("Target div with ID 'header' not found or less than 5 divs.");
@@ -84842,6 +84188,12 @@ const App = () => {
         else {
             window.addEventListener("DOMContentLoaded", observeDOM);
         }
+    }, []);
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+        console.log("inside useEffect 610");
+        console.log("inside useEffect 610");
+        console.log("inside useEffect 610");
+        console.log("inside useEffect 610");
     }, []);
     // remoce component
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null,

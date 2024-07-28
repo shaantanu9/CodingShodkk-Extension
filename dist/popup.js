@@ -115,7 +115,7 @@ const ProfileTab = ({ userData, setToken }) => {
     var _a, _b, _c, _d, _e;
     const [analytics, setAnalytics] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
     const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-    const primaryColor = "#4456FF";
+    // const primaryColor = "#4456FF";
     const refreshAnalytics = () => __awaiter(void 0, void 0, void 0, function* () {
         var _f;
         const analyticsData = yield _utils_services__WEBPACK_IMPORTED_MODULE_3__._userAccountService.getAnalytics();
@@ -215,8 +215,8 @@ const ProfileTab = ({ userData, setToken }) => {
                 alignItems: "center",
                 justifyContent: "center",
             } },
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", { style: { fontSize: "24px", fontWeight: "bold", color: "#4456FF" } }, item.value),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { style: { fontSize: "14px", fontWeight: "normal", color: "gray" } }, item.label))))),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", { style: { fontSize: "24px", fontWeight: "bold", color: "#4456FF" } }, item === null || item === void 0 ? void 0 : item.value),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { style: { fontSize: "14px", fontWeight: "normal", color: "gray" } }, item === null || item === void 0 ? void 0 : item.label))))),
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: {
                 position: "absolute",
                 right: "0",
@@ -615,18 +615,291 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _context_StateContext__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../context/StateContext */ "./src/components/context/StateContext.tsx");
-/* harmony import */ var _utils_services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/services */ "./src/utils/services/index.ts");
-// Create a Login Form and store the token in chrome storage
-
+/* harmony import */ var _utils_services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/services */ "./src/utils/services/index.ts");
+/* harmony import */ var _context_StateContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../context/StateContext */ "./src/components/context/StateContext.tsx");
+// // // Create a Login Form and store the token in chrome storage
+// // import * as React from "react";
+// // import { useContext } from "react";
+// // import axios from "axios";
+// // import { StateContext } from "../context/StateContext";
+// // import { _userAccountService } from "../../utils/services";
+// // const Login = ({ getTokenFrom }) => {
+// //   const [token, settoken] = React.useState("");
+// //   const [error, setError] = React.useState("");
+// //   const state = useContext(StateContext);
+// //   console.log("state from context", state);
+// //   const handleLogin = (e) => {
+// //     e.preventDefault();
+// //     if (token === "") {
+// //       setError("Please fill all the fields");
+// //     } else {
+// //       setError("");
+// //       _userAccountService
+// //         .loginWithToken({ token })
+// //         .then((res) => {
+// //           console.log("TOKEN res.data login 26", {
+// //             resData: res.data,
+// //             token: res?.data?.token,
+// //           });
+// //           chrome.storage.sync.set({ token: res?.data?.token, user:res?.data?.user }, () => {
+// //             getTokenFrom(res?.data?.token);
+// //             console.log("saved");
+// //           });
+// //         })
+// //         .catch((err) => {
+// //           setError("Invalid Credentials");
+// //           console.log(err);
+// //         });
+// //     }
+// //   };
+// //   return (
+// //     <form
+// //       onSubmit={handleLogin}
+// //       style={{
+// //         display: "flex",
+// //         width: "100%",
+// //         justifyContent: "between",
+// //         alignItems: "center",
+// //         // height: "100vh",
+// //         backgroundColor: "#f1f1f1",
+// //         borderRadius: "30px",
+// //       }}
+// //     >
+// //       <div className="login">
+// //         <div className="login__container">
+// //           <h1>Login Dee Second Brain</h1>
+// //           <textarea
+// //             placeholder="Token"
+// //             value={token}
+// //             required
+// //             onChange={(e) => settoken(e.target.value)}
+// //             style={{
+// //               marginBottom: "5px",
+// //               padding: "5px",
+// //               borderRadius: "5px",
+// //               width: "96%",
+// //               height: "40px",
+// //               // border color 6A46F9
+// //               border: "1px solid #4456FF",
+// //             }}
+// //           />
+// //           <br></br>
+// //           <div className="error">{error}</div>
+// //           <br></br>
+// //           <div
+// //             style={{
+// //               display: "flex",
+// //               justifyContent: "space-between",
+// //               alignItems: "center",
+// //             }}
+// //           >
+// //             <button
+// //               style={{
+// //                 backgroundColor: "#4456FF",
+// //                 color: "white",
+// //                 padding: "10px",
+// //                 textAlign: "center",
+// //                 textDecoration: "none",
+// //                 display: "inline-block",
+// //                 fontSize: "16px",
+// //                 margin: "4px 2px",
+// //                 cursor: "pointer",
+// //                 borderRadius: "12px",
+// //                 border: "none",
+// //                 // width: "87%",
+// //               }}
+// //             >
+// //               <a
+// //                 style={{
+// //                   backgroundColor: "#4456FF",
+// //                   color: "white",
+// //                   textDecoration: "none",
+// //                 }}
+// //                 href="https://ai.soobati.com/auth/sign-up"
+// //                 target="_blank"
+// //               >
+// //                 SignUp
+// //               </a>
+// //             </button>
+// //             <input
+// //               style={{
+// //                 backgroundColor: "#4456FF",
+// //                 color: "white",
+// //                 padding: "10px",
+// //                 textAlign: "center",
+// //                 textDecoration: "none",
+// //                 display: "inline-block",
+// //                 fontSize: "16px",
+// //                 margin: "4px 2px",
+// //                 cursor: "pointer",
+// //                 borderRadius: "12px",
+// //                 border: "none",
+// //                 // width: "87%",
+// //               }}
+// //               type="submit"
+// //               value="Login"
+// //             />
+// //           </div>
+// //         </div>
+// //       </div>
+// //     </form>
+// //     // register
+// //   );
+// // };
+// // export default Login;
+// import React, { useState, useContext } from "react";
+// import { _userAccountService } from "../../utils/services";
+// import { StateContext } from "../context/StateContext";
+// const Login = ({ getTokenFrom }) => {
+//   const [token, setToken] = useState("");
+//   const [error, setError] = useState("");
+//   const state = useContext(StateContext);
+//   console.log("state from context", state);
+//   const handleLogin = (e) => {
+//     e.preventDefault();
+//     if (token === "") {
+//       setError("Please fill all the fields");
+//     } else {
+//       setError("");
+//       _userAccountService
+//         .loginWithToken({ token })
+//         .then((res) => {
+//           console.log("TOKEN res.data login 26", {
+//             resData: res.data,
+//             token: res?.data?.token,
+//           });
+//           chrome.storage.sync.set(
+//             { token: res?.data?.token, user: res?.data?.user },
+//             () => {
+//               getTokenFrom(res?.data?.token);
+//               console.log("saved");
+//             }
+//           );
+//         })
+//         .catch((err) => {
+//           setError("Invalid Credentials");
+//           console.log(err);
+//         });
+//     }
+//   };
+//   const primaryColor = "#4456FF";
+//   return (
+//     <div
+//       style={{
+//         display: "flex",
+//         justifyContent: "center",
+//         alignItems: "center",
+//         width: "100%",
+//         height: "100vh",
+//         backgroundColor: "#f1f1f1",
+//       }}
+//     >
+//       <form
+//         onSubmit={handleLogin}
+//         style={{
+//           display: "flex",
+//           flexDirection: "column",
+//           justifyContent: "center",
+//           alignItems: "center",
+//           width: "300px",
+//           padding: "20px",
+//           borderRadius: "15px",
+//           backgroundColor: "white",
+//           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+//         }}
+//       >
+//         <h1 style={{ color: primaryColor, marginBottom: "20px" }}>Login Dee Second Brain</h1>
+//         <textarea
+//           placeholder="Token"
+//           value={token}
+//           required
+//           onChange={(e) => setToken(e.target.value)}
+//           style={{
+//             marginBottom: "10px",
+//             padding: "10px",
+//             borderRadius: "5px",
+//             width: "100%",
+//             height: "40px",
+//             border: `1px solid ${primaryColor}`,
+//             fontSize: "16px",
+//           }}
+//         />
+//         {error && (
+//           <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
+//         )}
+//         <div
+//           style={{
+//             display: "flex",
+//             justifyContent: "space-between",
+//             alignItems: "center",
+//             width: "100%",
+//           }}
+//         >
+//           <button
+//             style={{
+//               backgroundColor: primaryColor,
+//               color: "white",
+//               padding: "10px 20px",
+//               textAlign: "center",
+//               textDecoration: "none",
+//               display: "inline-block",
+//               fontSize: "16px",
+//               margin: "4px 2px",
+//               cursor: "pointer",
+//               borderRadius: "12px",
+//               border: "none",
+//               flexGrow: 1,
+//               marginRight: "5px",
+//             }}
+//           >
+//             <a
+//               style={{
+//                 color: "white",
+//                 textDecoration: "none",
+//               }}
+//               href="https://ai.soobati.com/auth/sign-up"
+//               target="_blank"
+//               rel="noopener noreferrer"
+//             >
+//               Sign Up
+//             </a>
+//           </button>
+//           <input
+//             style={{
+//               backgroundColor: primaryColor,
+//               color: "white",
+//               padding: "10px 20px",
+//               textAlign: "center",
+//               textDecoration: "none",
+//               display: "inline-block",
+//               fontSize: "16px",
+//               margin: "4px 2px",
+//               cursor: "pointer",
+//               borderRadius: "12px",
+//               border: "none",
+//               flexGrow: 1,
+//               marginLeft: "5px",
+//             }}
+//             type="submit"
+//             value="Login"
+//           />
+//         </div>
+//       </form>
+//     </div>
+//   );
+// };
+// export default Login;
+// Final
 
 
 
 const Login = ({ getTokenFrom }) => {
-    const [token, settoken] = react__WEBPACK_IMPORTED_MODULE_0__.useState("");
-    const [error, setError] = react__WEBPACK_IMPORTED_MODULE_0__.useState("");
-    const state = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_StateContext__WEBPACK_IMPORTED_MODULE_1__.StateContext);
-    console.log("state from context", state);
+    const [token, setToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+    const state = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_StateContext__WEBPACK_IMPORTED_MODULE_2__.StateContext);
+    const [hover, setHover] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+    const [hoverS, setHoverS] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
     const handleLogin = (e) => {
         e.preventDefault();
         if (token === "") {
@@ -634,89 +907,106 @@ const Login = ({ getTokenFrom }) => {
         }
         else {
             setError("");
-            _utils_services__WEBPACK_IMPORTED_MODULE_2__._userAccountService.loginWithToken({ token })
+            setLoading(true);
+            _utils_services__WEBPACK_IMPORTED_MODULE_1__._userAccountService.loginWithToken({ token })
                 .then((res) => {
-                var _a, _b, _c;
-                console.log("TOKEN res.data login 26", {
-                    resData: res.data,
-                    token: (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.token,
-                });
-                chrome.storage.sync.set({ token: (_b = res === null || res === void 0 ? void 0 : res.data) === null || _b === void 0 ? void 0 : _b.token, user: (_c = res === null || res === void 0 ? void 0 : res.data) === null || _c === void 0 ? void 0 : _c.user }, () => {
+                var _a, _b;
+                chrome.storage.sync.set({ token: (_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.token, user: (_b = res === null || res === void 0 ? void 0 : res.data) === null || _b === void 0 ? void 0 : _b.user }, () => {
                     var _a;
                     getTokenFrom((_a = res === null || res === void 0 ? void 0 : res.data) === null || _a === void 0 ? void 0 : _a.token);
-                    console.log("saved");
+                    setLoading(false);
                 });
             })
                 .catch((err) => {
                 setError("Invalid Credentials");
-                console.log(err);
+                setLoading(false);
             });
         }
     };
-    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", { onSubmit: handleLogin, style: {
+    const primaryColor = "#4456FF";
+    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: {
             display: "flex",
-            width: "100%",
-            justifyContent: "between",
+            justifyContent: "center",
             alignItems: "center",
+            // width: "100%",
             // height: "100vh",
             backgroundColor: "#f1f1f1",
-            borderRadius: "30px",
+            // padding: "20px",
         } },
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "login" },
-            react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "login__container" },
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Login Dee Second Brain"),
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement("textarea", { placeholder: "Token", value: token, required: true, onChange: (e) => settoken(e.target.value), style: {
-                        marginBottom: "5px",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        width: "96%",
-                        height: "40px",
-                        // border color 6A46F9
-                        border: "1px solid #4456FF",
-                    } }),
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null),
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "error" }, error),
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null),
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { style: {
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                    } },
-                    react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", { style: {
-                            backgroundColor: "#4456FF",
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", { onSubmit: handleLogin, style: {
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "400px",
+                padding: "20px",
+                borderRadius: "15px",
+                backgroundColor: "white",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", { src: "/SoobatiAILogo.png", alt: "Logo", style: { width: "100px" } }),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", { style: { color: primaryColor, marginBottom: "-10px" } }, "Login to Soobati AI"),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { style: { textAlign: "center", color: "#333", marginBottom: "20px", textDecoration: "bold",
+                    fontSize: "14px", fontWeight: "bold"
+                } },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Your AI Companion for Life")),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { style: { marginBottom: "20px", textAlign: "center", color: "#333" } }, "Paste your token to login. If you don't have a token, please sign up."),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", { placeholder: "Token", value: token, required: true, onChange: (e) => setToken(e.target.value), style: {
+                    marginBottom: "10px",
+                    padding: "10px",
+                    borderRadius: "5px",
+                    width: "100%",
+                    height: "40px",
+                    border: `1px solid ${primaryColor}`,
+                    fontSize: "16px",
+                    minHeight: "80px",
+                } }),
+            error && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: { color: "red", marginBottom: "10px" } }, error)),
+            loading && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: { marginBottom: "10px", color: primaryColor } }, "Loading...")),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: {
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "100%",
+                } },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { style: {
+                        backgroundColor: hover ? "#3548d4" : primaryColor,
+                        color: "white",
+                        padding: "10px 20px",
+                        textAlign: "center",
+                        textDecoration: "none",
+                        display: "inline-block",
+                        fontSize: "16px",
+                        margin: "4px 2px",
+                        cursor: "pointer",
+                        borderRadius: "12px",
+                        border: "none",
+                        flexGrow: 1,
+                        marginRight: "5px",
+                    }, onMouseLeave: () => setHover(false), onMouseOver: () => setHover(true) },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", { style: {
                             color: "white",
-                            padding: "10px",
-                            textAlign: "center",
                             textDecoration: "none",
-                            display: "inline-block",
-                            fontSize: "16px",
-                            margin: "4px 2px",
-                            cursor: "pointer",
-                            borderRadius: "12px",
-                            border: "none",
-                            // width: "87%",
-                        } },
-                        react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", { style: {
-                                backgroundColor: "#4456FF",
-                                color: "white",
-                                textDecoration: "none",
-                            }, href: "https://ai.soobati.com/auth/sign-up", target: "_blank" }, "SignUp")),
-                    react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", { style: {
-                            backgroundColor: "#4456FF",
-                            color: "white",
-                            padding: "10px",
-                            textAlign: "center",
-                            textDecoration: "none",
-                            display: "inline-block",
-                            fontSize: "16px",
-                            margin: "4px 2px",
-                            cursor: "pointer",
-                            borderRadius: "12px",
-                            border: "none",
-                            // width: "87%",
-                        }, type: "submit", value: "Login" })))))
-    // register
-    );
+                        }, href: "https://ai.soobati.com/auth/sign-up", target: "_blank", rel: "noopener noreferrer" }, "Sign Up")),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", { style: {
+                        backgroundColor: hoverS ? "#3548d4" : primaryColor,
+                        color: "white",
+                        padding: "10px 20px",
+                        textAlign: "center",
+                        textDecoration: "none",
+                        display: "inline-block",
+                        fontSize: "16px",
+                        margin: "4px 2px",
+                        cursor: "pointer",
+                        borderRadius: "12px",
+                        border: "none",
+                        flexGrow: 1,
+                        marginLeft: "5px",
+                    }, onMouseOver: () => setHoverS(true), onMouseLeave: () => setHoverS(false), type: "submit", value: "Login" })),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", { style: { marginTop: "20px", color: "#777", textAlign: "center" } },
+                "By logging in, you agree to our",
+                " ",
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", { href: "https://ai.soobati.com/privacy-policy", target: "_blank", rel: "noopener noreferrer", style: { color: primaryColor } }, "Privacy Policy")))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Login);
 
