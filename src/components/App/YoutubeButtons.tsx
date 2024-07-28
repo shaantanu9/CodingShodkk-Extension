@@ -152,10 +152,10 @@ const YoutubeButtons: React.FC<YoutubeButtonsProps> = ({
         );
       case "notes":
         return (
-          // <div style={contentTextStyle}>
-          // {/* Notes content goes here. */}
-          <TextEditor />
-          // </div>
+          <div style={contentTextStyle}>
+            AI Notes content goes here. (Comming soon)
+            {/* // <TextEditor /> */}
+          </div>
         );
       default:
         return <div style={contentTextStyle}>Please select an option.</div>;
@@ -210,6 +210,7 @@ const containerStyle: React.CSSProperties = {
   gap: "1rem",
   textTransform: "capitalize",
   fontSize: "1.5rem",
+  zIndex: 1,
 };
 
 const buttonContainerStyle: React.CSSProperties = {

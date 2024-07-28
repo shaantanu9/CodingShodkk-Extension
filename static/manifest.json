@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Dee Second Brain",
-  "description": "An Chrome Extension to save the link and notes",
+  "name": "Soobati AI",
+  "description": "Your AI Companion for Life",
   "version": "1.0.0",
   "icons": {
     "16": "logo16.png",
@@ -9,7 +9,7 @@
     "128": "logo120.png"
   },
   "action": {
-    "default_title": "Bookmark Link and Notes",
+    "default_title": "Bookmarks, Summarize content, Create quizzes from YT Video, Track Tasks, and Journal effortlessly",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "logo16.png",

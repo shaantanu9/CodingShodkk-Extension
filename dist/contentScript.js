@@ -45295,102 +45295,6 @@ exports["default"] = StyleToObject;
 
 /***/ }),
 
-/***/ "./src/components/App/Notes.tsx":
-/*!**************************************!*\
-  !*** ./src/components/App/Notes.tsx ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-const TextEditor = () => {
-    const [content, setContent] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-    const editorRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-        // Load content from Chrome storage
-        chrome.storage.sync.get(['noteContent'], (result) => {
-            if (result.noteContent) {
-                setContent(result.noteContent);
-            }
-        });
-    }, []);
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-        // Save content to Chrome storage
-        chrome.storage.sync.set({ noteContent: content });
-    }, [content]);
-    const handleInput = (e) => {
-        setContent(e.target.innerHTML);
-    };
-    const handleKeyDown = (e) => {
-        // Disable default shortcuts
-        if (e.ctrlKey || e.metaKey) {
-            switch (e.key.toLowerCase()) {
-                case 'b': // Ctrl+B or Cmd+B
-                case 'i': // Ctrl+I or Cmd+I
-                case 'u': // Ctrl+U or Cmd+U
-                case 's': // Ctrl+S or Cmd+S
-                case 'p': // Ctrl+P or Cmd+P
-                case 'r': // Ctrl+R or Cmd+R (refresh)
-                case 'f': // Ctrl+F or Cmd+F (find)
-                case 'z': // Ctrl+Z or Cmd+Z (undo)
-                case 'y': // Ctrl+Y or Cmd+Y (redo)
-                    e.preventDefault();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-    const execCommand = (command, value = null) => {
-        document.execCommand(command, false, value);
-    };
-    const handleImagePaste = (e) => {
-        const items = e.clipboardData.items;
-        for (let item of items) {
-            if (item.type.indexOf('image') !== -1) {
-                const blob = item.getAsFile();
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    execCommand('insertImage', event.target.result);
-                };
-                reader.readAsDataURL(blob);
-            }
-        }
-    };
-    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: { padding: '20px', width: '600px', margin: 'auto' } },
-        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { style: { marginBottom: '10px' } },
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => execCommand('bold') },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, "B")),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => execCommand('italic') },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("i", null, "I")),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => execCommand('underline') },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("u", null, "U")),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => {
-                    const url = prompt('Enter the URL');
-                    execCommand('createLink', url);
-                } }, "Link")),
-        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { ref: editorRef, contentEditable: true, suppressContentEditableWarning: true, onInput: handleInput, onKeyDown: handleKeyDown, onPaste: handleImagePaste, style: {
-                minHeight: '200px',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                backgroundColor: '#fff',
-                color: '#333',
-                overflowY: 'auto',
-                outline: 'none'
-            } }, content)));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TextEditor);
-
-
-/***/ }),
-
 /***/ "./src/components/App/QuizComponent.tsx":
 /*!**********************************************!*\
   !*** ./src/components/App/QuizComponent.tsx ***!
@@ -46053,7 +45957,7 @@ const ShowSummary = ({ title, videoId, videoDetails }) => {
 const loadingStyle = {
     width: "100px",
     height: "100px",
-    backgroundColor: "#462FEB",
+    backgroundColor: "white",
     borderRadius: "50%",
     animation: "pulse 2s infinite",
 };
@@ -46061,8 +45965,9 @@ const buttonContainerStyle = {
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
-    marginTop: "-60px",
+    marginTop: "-30px",
     gap: "10px",
+    zIndex: 2,
 };
 const buttonStyle = {
     padding: "1rem 2rem",
@@ -46113,18 +46018,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Notes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Notes */ "./src/components/App/Notes.tsx");
-/* harmony import */ var _QuizComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuizComponent */ "./src/components/App/QuizComponent.tsx");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _ShowSummary__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ShowSummary */ "./src/components/App/ShowSummary.tsx");
-// import React, { useEffect, useState } from "react";
-// import { _bookmarkAccountService } from "../../utils/services";
-// import pako from "pako";
-// import { Buffer } from "buffer";
-// import ReactMarkdown from "react-markdown";
-// import ShowSummary from './ShowSummary';
-
+/* harmony import */ var _QuizComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QuizComponent */ "./src/components/App/QuizComponent.tsx");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ShowSummary__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ShowSummary */ "./src/components/App/ShowSummary.tsx");
 
 // const YoutubeButtons = ({ videoDetails, title, videoId }: any) => {
 //   const [optionSelected, setOptionSelected] = useState<string | null>(null);
@@ -46225,34 +46122,29 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const YoutubeButtons = ({ videoDetails, title, videoId, }) => {
-    const [optionSelected, setOptionSelected] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
-    const [isTyping, setIsTyping] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
-    const [fullResponse, setFullResponse] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("");
-    const [typingIndex, setTypingIndex] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0);
-    const [response, setResponse] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("");
-    const [hoveredButton, setHoveredButton] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
+    const [optionSelected, setOptionSelected] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [isTyping, setIsTyping] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [fullResponse, setFullResponse] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const [typingIndex, setTypingIndex] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0);
+    const [response, setResponse] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const [hoveredButton, setHoveredButton] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     const options = ["summarize", "quiz", "notes"];
     const primaryColor = "#4456FF";
     const renderContent = () => {
         switch (optionSelected) {
             case "summarize":
-                return (react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_ShowSummary__WEBPACK_IMPORTED_MODULE_3__["default"], { title: title, videoId: videoId, videoDetails: videoDetails }));
+                return (react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_ShowSummary__WEBPACK_IMPORTED_MODULE_2__["default"], { title: title, videoId: videoId, videoDetails: videoDetails }));
             case "quiz":
-                return (react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", { style: contentTextStyle },
+                return (react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { style: contentTextStyle },
                     "Quiz content goes here.",
-                    react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_QuizComponent__WEBPACK_IMPORTED_MODULE_1__["default"], { url: `https://www.youtube.com/watch?v=${videoId}` })));
+                    react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_QuizComponent__WEBPACK_IMPORTED_MODULE_0__["default"], { url: `https://www.youtube.com/watch?v=${videoId}` })));
             case "notes":
-                return (
-                // <div style={contentTextStyle}>
-                // {/* Notes content goes here. */}
-                react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_Notes__WEBPACK_IMPORTED_MODULE_0__["default"], null)
-                // </div>
-                );
+                return (react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { style: contentTextStyle }, "AI Notes content goes here. (Comming soon)"));
             default:
-                return react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", { style: contentTextStyle }, "Please select an option.");
+                return react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { style: contentTextStyle }, "Please select an option.");
         }
     };
-    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         if (isTyping && typingIndex < fullResponse.length) {
             const timeout = setTimeout(() => {
                 setResponse((prev) => prev + fullResponse.charAt(typingIndex));
@@ -46264,11 +46156,11 @@ const YoutubeButtons = ({ videoDetails, title, videoId, }) => {
             setIsTyping(false);
         }
     }, [isTyping, typingIndex, fullResponse]);
-    return (react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", { style: containerStyle },
-        react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", { style: buttonContainerStyle }, options.map((option) => (react__WEBPACK_IMPORTED_MODULE_2___default().createElement("button", { key: option, onClick: () => setOptionSelected(option), style: Object.assign(Object.assign({}, buttonStyle), { backgroundColor: optionSelected === option || hoveredButton === option
+    return (react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { style: containerStyle },
+        react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { style: buttonContainerStyle }, options.map((option) => (react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", { key: option, onClick: () => setOptionSelected(option), style: Object.assign(Object.assign({}, buttonStyle), { backgroundColor: optionSelected === option || hoveredButton === option
                     ? primaryColor
                     : "#868CFF" }), onMouseOver: () => setHoveredButton(option), onMouseOut: () => setHoveredButton(null) }, option)))),
-        react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", { style: contentStyle }, renderContent())));
+        react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", { style: contentStyle }, renderContent())));
 };
 const containerStyle = {
     backgroundColor: "white",
@@ -46280,6 +46172,7 @@ const containerStyle = {
     gap: "1rem",
     textTransform: "capitalize",
     fontSize: "1.5rem",
+    zIndex: 1,
 };
 const buttonContainerStyle = {
     display: "flex",
@@ -46550,7 +46443,7 @@ const GET_REMINDERS_BY_USER = "/reminders/user";
 const GET_REMINDERS_ASSIGNED_TO_USER = "/reminders/assigned";
 const GET_PERSONAL_REMINDERS = "/reminders/personal";
 const GET_COMPANY_REMINDERS = "/reminders/company";
-const LOGO_BASE64 = "data:image/png;base64,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";
+const LOGO_BASE64 = "data:image/png;base64,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";
 // Quiz Prgrogress
 const CREATE_PROGRESS = 'quiz-progress';
 const GET_PROGRESS = 'quiz-progress';

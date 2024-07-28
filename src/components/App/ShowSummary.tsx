@@ -406,7 +406,7 @@ const ShowSummary = ({ title, videoId, videoDetails }) => {
 const loadingStyle: React.CSSProperties = {
   width: "100px",
   height: "100px",
-  backgroundColor: "#462FEB",
+  backgroundColor: "white",
   borderRadius: "50%",
   animation: "pulse 2s infinite",
 };
@@ -415,8 +415,9 @@ const buttonContainerStyle: React.CSSProperties = {
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
-  marginTop: "-60px",
+  marginTop: "-30px",
   gap: "10px",
+  zIndex: 2,
 };
 
 
